@@ -13,4 +13,8 @@ Skeleton of participants module
 
 - Herminio García González (@herminiogg)
 - Jose Emilio Labra Gayo (@labra)
+- Sergio Flórez Vallina (@zerolfer)
+- Rubén García Ruiz (@RubenGarciaR)
+- Sonia Gestal Huelga (@sonia94)
+- Luis Irazusta Lorenzo (@Fuegon)
 

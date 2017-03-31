@@ -22,6 +22,7 @@ public class Comment {
 	@NotNull
 	@Column(unique = true)
 	private String code;
+	@NotNull
 	private String description;
 
 	@ManyToOne

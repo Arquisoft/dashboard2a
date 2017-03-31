@@ -3,26 +3,42 @@ package uo.asw.dbmanagement.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+
+@Entity
 public class Comment {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@NotNull
+	@Column(unique = true)
 	private String code;
 	private String description;
-	
+
+	@ManyToOne
 	private Citizen citizen;
-	
+
+	@ManyToOne
 	private Suggestion suggestion;
-	
+
+	@OneToMany(mappedBy = "comment")
 	private HashSet<VoteComment> voteComments = new HashSet<>();
 
 	Comment() {
 	}
 
-	
 	public Citizen getCitizen() {
 		return citizen;
 	}
-
 
 	public Suggestion getSuggestion() {
 		return suggestion;
@@ -47,7 +63,7 @@ public class Comment {
 	public String getCode() {
 		return code;
 	}
-	
+
 	/* package */ Set<VoteComment> _getVoteComments() {
 		return voteComments;
 	}
@@ -86,14 +102,12 @@ public class Comment {
 		return "Comment [id=" + id + ", code=" + code + ", description=" + description + "]";
 	}
 
-
-	/*package */ void _setCitizen(Citizen ci) {
-		this.citizen = ci;		
+	/* package */ void _setCitizen(Citizen ci) {
+		this.citizen = ci;
 	}
 
-
-	/*package */ void _setSuggestion(Suggestion s) {
-		this.suggestion = s;		
+	/* package */ void _setSuggestion(Suggestion s) {
+		this.suggestion = s;
 	}
 
 }

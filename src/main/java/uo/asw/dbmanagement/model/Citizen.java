@@ -4,25 +4,49 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+@Entity
 public class Citizen {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@NotNull
 	private String password;
+	@NotNull
 	private String userName;
+
+	@NotNull
+	@Column(unique = true)
 	private String dni;
 	private String name;
 	private String surname;
+	@Temporal(TemporalType.DATE)
 	private Date bornDate;
 	private String email;
 	private String postAddress;
 	private String nationality;
 
+	@OneToMany(mappedBy = "citizen")
 	private Set<Comment> comments = new HashSet<>();
 
+	@OneToMany(mappedBy = "citizen")
 	private Set<Suggestion> suggestions = new HashSet<>();
 
+	@OneToMany(mappedBy = "citizen")
 	private Set<VoteSuggestion> voteSuggestions = new HashSet<>();
-	
+
+	@OneToMany(mappedBy = "citizen")
 	private Set<VoteComment> voteComments = new HashSet<>();
 
 	Citizen() {
@@ -35,8 +59,8 @@ public class Citizen {
 	public Set<Suggestion> getSuggestions() {
 		return new HashSet<>(suggestions);
 	}
-	
-	/* package */ Set<Suggestion> _getSuggestions(){
+
+	/* package */ Set<Suggestion> _getSuggestions() {
 		return suggestions;
 	}
 
@@ -123,7 +147,7 @@ public class Citizen {
 	public Set<VoteSuggestion> getVoteSuggestions() {
 		return new HashSet<>(voteSuggestions);
 	}
-	
+
 	/* package */ Set<VoteComment> _getVoteComments() {
 		return voteComments;
 	}
@@ -131,7 +155,7 @@ public class Citizen {
 	public Set<VoteComment> getVoteComments() {
 		return new HashSet<>(voteComments);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

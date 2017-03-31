@@ -3,18 +3,31 @@ package uo.asw.dbmanagement.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+
+@Entity
 public class Category {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String name; // Unico
-	
+
+	@NotNull
+	@Column(unique = true)
+	private String name;
+
+	@OneToMany(mappedBy = "category")
 	private Set<Suggestion> suggestions = new HashSet<>();
 
 	Category() {
 	}
 
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -22,8 +35,8 @@ public class Category {
 	public String getName() {
 		return name;
 	}
-	
-	public Set<Suggestion> getSuggestions(){
+
+	public Set<Suggestion> getSuggestions() {
 		return new HashSet<>(suggestions);
 	}
 
@@ -56,8 +69,6 @@ public class Category {
 	public String toString() {
 		return "Category [id=" + id + ", name=" + name + "]";
 	}
-
-
 
 	/* package */ Set<Suggestion> _getSuggestions() {
 		return suggestions;

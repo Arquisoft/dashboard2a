@@ -1,19 +1,43 @@
 package uo.asw.dbmanagement.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
+@Entity
 public class User {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@NotNull
+	@Column(unique = true)
 	private String login;
+
+	@NotNull
 	private String password;
-	
-	//Para las vistas
+
+	// Para las vistas
+	@NotNull
 	private boolean viewCategories;
+	@NotNull
 	private boolean viewComments;
+	@NotNull
 	private boolean viewSuggestions;
-	
-	User() {}
-	
-	public User(String login){
+
+	User() {
+	}
+
+	public User(String login) {
 		this.login = login;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getPassword() {
@@ -82,7 +106,5 @@ public class User {
 		return "User [login=" + login + ", password=" + password + ", viewCategories=" + viewCategories
 				+ ", viewComments=" + viewComments + ", viewSuggestions=" + viewSuggestions + "]";
 	}
-	
-	
 
 }

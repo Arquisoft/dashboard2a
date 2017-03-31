@@ -3,20 +3,41 @@ package uo.asw.dbmanagement.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+
+@Entity
 public class Suggestion {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@NotNull
+	@Column(unique = true)
 	private String code;
+
+	@NotNull
 	private String title;
 	private String description;
 	private int minVotes;
 
+	@ManyToOne
 	private Citizen citizen;
 
+	@OneToMany(mappedBy = "suggestion")
 	private Set<Comment> comments = new HashSet<>();
 
+	@ManyToOne
 	private Category category;
-	
+
+	@OneToMany(mappedBy = "suggestion")
 	private Set<VoteSuggestion> voteSuggestions = new HashSet<>();
 
 	Suggestion() {
@@ -30,13 +51,9 @@ public class Suggestion {
 		return citizen;
 	}
 
-	
-
 	public Category getCategory() {
 		return category;
 	}
-
-	
 
 	public Set<Comment> getComments() {
 		return comments;
@@ -73,7 +90,7 @@ public class Suggestion {
 	public String getCode() {
 		return code;
 	}
-	
+
 	/* package */ Set<VoteSuggestion> _getVoteSuggestions() {
 		return voteSuggestions;
 	}
@@ -114,7 +131,7 @@ public class Suggestion {
 	}
 
 	/* package */ void _setCitizen(Citizen c) {
-		this.citizen = c;		
+		this.citizen = c;
 	}
 
 	/* package */ Set<Comment> _getComments() {
@@ -122,7 +139,7 @@ public class Suggestion {
 	}
 
 	/* package */ void _setCategory(Category c) {
-		this.category = c;		
+		this.category = c;
 	}
 
 }

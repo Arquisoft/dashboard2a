@@ -17,15 +17,13 @@ import javax.annotation.ManagedBean;
 @ManagedBean
 public class MessageListener {
 
-    private static final Logger logger = Logger.getLogger(MessageListener.class);
-    public static List<String> con = new ArrayList<String>();
+	private static final Logger logger = Logger.getLogger(MessageListener.class);
+	public static List<String> con = new ArrayList<String>();
 
-    @KafkaListener(topics = "exampleTopic")
-    public void listen(String data) {
-    	con.add(data);
-        logger.info("New message received: \"" + data + "\"");
-    }
-
-
+	@KafkaListener(topics = "exampleTopic")
+	public void listen(String data) {
+		con.add(data);
+		logger.info("New message received: \"" + data + "\"");
+	}
 
 }

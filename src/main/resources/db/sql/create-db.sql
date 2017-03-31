@@ -16,7 +16,7 @@ name VARCHAR(255) NOT NULL UNIQUE
 CREATE TABLE citizen(
 id BIGINT PRIMARY KEY,
 password VARCHAR(255) NOT NULL,
-userName VARCHAR(255) NOT NULL,
+userName VARCHAR(255) NOT NULL UNIQUE,
 dni VARCHAR(255) NOT NULL UNIQUE,
 name VARCHAR(255),
 surname VARCHAR(255),
@@ -34,7 +34,6 @@ title VARCHAR(255) NOT NULL,
 description VARCHAR(255),
 minVotes INTEGER,
 id_citizen BIGINT NOT NULL,
-id_comment BIGINT NOT NULL,
 id_category BIGINT NOT NULL,
 CONSTRAINT fk_suggestion_citizen FOREIGN KEY (id_citizen) REFERENCES citizen(id),
 CONSTRAINT fk_suggestion_category FOREIGN KEY (id_category) REFERENCES category(id)
@@ -53,6 +52,7 @@ CONSTRAINT fk_commnet_suggestion FOREIGN KEY (id_suggestion) REFERENCES suggesti
 CREATE TABLE voteSuggestion(
 id_citizen BIGINT,
 id_suggestion BIGINT,
+vote VARCHAR(255) NOT NULL,
 CONSTRAINT pk_voteSuggestion PRIMARY KEY (id_citizen, id_suggestion),
 CONSTRAINT fk_voteSuggestion_citizen FOREIGN KEY (id_citizen) REFERENCES citizen(id),
 CONSTRAINT fk_voteSuggestion_suggestion FOREIGN KEY (id_suggestion) REFERENCES suggestion(id)
@@ -61,6 +61,7 @@ CONSTRAINT fk_voteSuggestion_suggestion FOREIGN KEY (id_suggestion) REFERENCES s
 CREATE TABLE voteComment(
 id_citizen BIGINT,
 id_comment BIGINT,
+vote VARCHAR(255) NOT NULL,
 CONSTRAINT pk_voteComment PRIMARY KEY (id_citizen, id_comment),
 CONSTRAINT fk_voteComment_citizen FOREIGN KEY (id_citizen) REFERENCES citizen(id),
 CONSTRAINT fk_voteComment_comment FOREIGN KEY (id_comment) REFERENCES comment(id)

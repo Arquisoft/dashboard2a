@@ -24,6 +24,7 @@ public class Citizen {
 	@NotNull
 	private String password;
 	@NotNull
+	@Column(unique = true)
 	private String userName;
 
 	@NotNull

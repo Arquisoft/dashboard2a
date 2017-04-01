@@ -41,6 +41,11 @@ public class Comment {
 		this.code = code;
 	}
 
+	public Comment(String code, String description) {
+		this(code);
+		this.description = description;
+	}
+
 	public Comment(String code, Citizen c, Suggestion s) {
 		this(code);
 		Association.CreateComment.link(c, this, s);

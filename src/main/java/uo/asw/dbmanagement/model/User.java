@@ -35,6 +35,16 @@ public class User {
 	public User(String login) {
 		this.login = login;
 	}
+	
+	
+
+	public User(String login, String password, boolean viewCategories, boolean viewComments, boolean viewSuggestions) {
+		this(login);
+		this.password = password;
+		this.viewCategories = viewCategories;
+		this.viewComments = viewComments;
+		this.viewSuggestions = viewSuggestions;
+	}
 
 	public Long getId() {
 		return id;

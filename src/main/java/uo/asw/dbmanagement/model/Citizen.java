@@ -53,6 +53,24 @@ public class Citizen {
 	Citizen() {
 	}
 
+	public Citizen(String dni) {
+		this.dni = dni;
+	}
+	
+	
+	public Citizen(String password, String userName, String dni, String name, String surname, Date bornDate,
+			String email, String postAddress, String nationality) {
+		this(dni);
+		this.password = password;
+		this.userName = userName;
+		this.name = name;
+		this.surname = surname;
+		this.bornDate = bornDate;
+		this.email = email;
+		this.postAddress = postAddress;
+		this.nationality = nationality;
+	}
+
 	public Set<Comment> getComments() {
 		return new HashSet<>(comments);
 	}
@@ -65,9 +83,6 @@ public class Citizen {
 		return suggestions;
 	}
 
-	public Citizen(String dni) {
-		this.dni = dni;
-	}
 
 	public String getPassword() {
 		return password;

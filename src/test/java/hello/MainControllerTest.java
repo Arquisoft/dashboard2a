@@ -17,16 +17,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
+import uo.asw.Application;
+import uo.asw.dashboard.UserInfo;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-@IntegrationTest({"server.port=0"})
+@IntegrationTest({ "server.port=0" })
 public class MainControllerTest {
 
-    @Value("${local.server.port}")
-    private int port;
+	@Value("${local.server.port}")
+	private int port;
 
-    private URL base;
+	private URL base;
 	private RestTemplate template;
 
 	@Before
@@ -37,16 +40,16 @@ public class MainControllerTest {
 
 	@Test
 	public void getLanding() throws Exception {
-		String userURI = base.toString() + "/user";  
+		String userURI = base.toString() + "/";
 		ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
-		assertThat(response.getBody(), containsString("Hola"));
+		assertThat(response.getBody(), containsString("Sistema de participacion ciudadana"));
 	}
-	
+
 	@Test
 	public void getUser() throws Exception {
-		String userURI = base.toString() + "/user";  
+		String userURI = base.toString() + "/userEjemplo";
 		ResponseEntity<String> response = template.getForEntity(userURI, String.class);
-		UserInfo expected = new UserInfo("pepe",0);
+		UserInfo expected = new UserInfo("pepe", 0);
 	}
 
 }

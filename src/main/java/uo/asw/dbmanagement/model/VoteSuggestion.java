@@ -5,6 +5,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import uo.asw.dbmanagement.model.types.VoteSuggestionKey;
@@ -19,10 +20,12 @@ public class VoteSuggestion {
 
 	@Id
 	@ManyToOne
+	@JoinColumn(name = "citizen_id", referencedColumnName = "id")
 	private Citizen citizen;
 
 	@Id
 	@ManyToOne
+	@JoinColumn(name = "suggestion_id", referencedColumnName = "id")
 	private Suggestion suggestion;
 
 	public VoteSuggestion(Citizen c, Suggestion s) {

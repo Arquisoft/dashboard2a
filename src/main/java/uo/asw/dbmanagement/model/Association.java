@@ -33,26 +33,20 @@ public class Association {
 	}
 
 	public static class CreateComment {
-		public static void link(Citizen ci, Comment comment) {
+		public static void link(Citizen ci, Comment comment, Suggestion s) {
 			comment._setCitizen(ci);
+			comment._setSuggestion(s);
+
 			ci._getComments().add(comment);
+			s._getComments().add(comment);
 		}
 
-		public static void unlink(Citizen ci, Comment comment) {
-			ci._getComments().remove(comment);
+		public static void unlink(Comment comment) {
+			comment.getSuggestion()._getComments().remove(comment);
+			comment.getCitizen()._getComments().remove(comment);
+
+			comment._setSuggestion(null);
 			comment._setCitizen(null);
-		}
-	}
-
-	public static class CommentSuggestion {
-		public static void link(Comment c, Suggestion s) {
-			c._setSuggestion(s);
-			s._getComments().add(c);
-		}
-
-		public static void unlink(Comment c, Suggestion s) {
-			s._getComments().remove(c);
-			c._setSuggestion(null);
 		}
 	}
 

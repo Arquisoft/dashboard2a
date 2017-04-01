@@ -1,4 +1,4 @@
-CREATE TABLE Tuser(
+CREATE TABLE User(
 id BIGINT PRIMARY KEY,
 login VARCHAR(255) NOT NULL UNIQUE,
 password VARCHAR(255) NOT NULL,
@@ -33,36 +33,28 @@ code VARCHAR(255) NOT NULL UNIQUE,
 title VARCHAR(255) NOT NULL,
 description VARCHAR(255),
 minVotes INTEGER,
-id_citizen BIGINT NOT NULL,
-id_category BIGINT NOT NULL,
-CONSTRAINT fk_suggestion_citizen FOREIGN KEY (id_citizen) REFERENCES citizen(id),
-CONSTRAINT fk_suggestion_category FOREIGN KEY (id_category) REFERENCES category(id)
+citizen_id BIGINT NOT NULL,
+category_id BIGINT NOT NULL
 );
 
 CREATE TABLE comment(
 id BIGINT PRIMARY KEY,
 code VARCHAR(255) NOT NULL UNIQUE,
 description VARCHAR(255) NOT NULL,
-id_citizen BIGINT NOT NULL,
-id_suggestion BIGINT NOT NULL,
-CONSTRAINT fk_commnet_citizen FOREIGN KEY (id_citizen) REFERENCES citizen(id),
-CONSTRAINT fk_commnet_suggestion FOREIGN KEY (id_suggestion) REFERENCES suggestion(id),
+citizen_id BIGINT NOT NULL,
+suggestion_id BIGINT NOT NULL
 );
 
 CREATE TABLE voteSuggestion(
-id_citizen BIGINT,
-id_suggestion BIGINT,
+citizen_id BIGINT,
+suggestion_id BIGINT,
 vote VARCHAR(255) NOT NULL,
-CONSTRAINT pk_voteSuggestion PRIMARY KEY (id_citizen, id_suggestion),
-CONSTRAINT fk_voteSuggestion_citizen FOREIGN KEY (id_citizen) REFERENCES citizen(id),
-CONSTRAINT fk_voteSuggestion_suggestion FOREIGN KEY (id_suggestion) REFERENCES suggestion(id)
+CONSTRAINT pk_voteSuggestion PRIMARY KEY (citizen_id, suggestion_id)
 );
 
 CREATE TABLE voteComment(
-id_citizen BIGINT,
-id_comment BIGINT,
+citizen_id BIGINT,
+comment_id BIGINT,
 vote VARCHAR(255) NOT NULL,
-CONSTRAINT pk_voteComment PRIMARY KEY (id_citizen, id_comment),
-CONSTRAINT fk_voteComment_citizen FOREIGN KEY (id_citizen) REFERENCES citizen(id),
-CONSTRAINT fk_voteComment_comment FOREIGN KEY (id_comment) REFERENCES comment(id)
+CONSTRAINT pk_voteComment PRIMARY KEY (citizen_id, comment_id)
 );

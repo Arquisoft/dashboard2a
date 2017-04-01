@@ -32,9 +32,18 @@ public class Comment {
 	private Suggestion suggestion;
 
 	@OneToMany(mappedBy = "comment")
-	private HashSet<VoteComment> voteComments = new HashSet<>();
+	private Set<VoteComment> voteComments = new HashSet<>();
 
 	Comment() {
+	}
+
+	public Comment(String code) {
+		this.code = code;
+	}
+
+	public Comment(String code, Citizen c, Suggestion s) {
+		this(code);
+		Association.CreateComment.link(c, this, s);
 	}
 
 	public Citizen getCitizen() {
@@ -43,10 +52,6 @@ public class Comment {
 
 	public Suggestion getSuggestion() {
 		return suggestion;
-	}
-
-	public Comment(String code) {
-		this.code = code;
 	}
 
 	public String getDescription() {

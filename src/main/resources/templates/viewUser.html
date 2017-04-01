@@ -1,8 +1,26 @@
 <html>
 <head>
-    <title>Spring MVC Form Handling</title>
+<title>Informacion el usuario</title>
 </head>
 <body>
-	<h1>Página de usuario</h1>
+	<h1>Pagina del usuario</h1>
+	<table th:if="${session.user.viewCategories}" id ="tableCategories" border="1px">
+		<tr>
+			<td>Esta es la tabla de Categorias</td>
+		</tr>
+	</table>
+
+	<table th:if="${session.user.viewComments}" id ="tableComments" border="1px">
+		<tr>
+			<td>Esta es la tabla de Comentarios</td>
+		</tr>
+	</table>
+
+	<table th:if="${session.user.viewSuggestions}" id = "tableSuggestions" border="1px">
+		<tr>
+			<td>Esta es la tabla de Propuestas</td>
+		</tr>
+	</table>
+	<a href="/closeSession">Cerrar sesion</a>
 </body>
 </html>

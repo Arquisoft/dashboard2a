@@ -46,8 +46,6 @@ public class Suggestion {
 	public Suggestion(String code) {
 		this.code = code;
 	}
-	
-	
 
 	public Suggestion(String code, String title, String description, int minVotes) {
 		this(code);

@@ -7,11 +7,11 @@ import org.springframework.kafka.annotation.KafkaListener;
 
 import uo.asw.kafkastream.Topics;
 
-@ManagedBean(value="createComment")
+@ManagedBean(value = "createComment")
 public class CreateCommentListener {
 
 	private static final Logger logger = Logger.getLogger(CreateCommentListener.class);
-	
+
 	@KafkaListener(topics = Topics.CREATE_COMMENT)
 	public void listen(String data) {
 		logger.info("New message received in CreateComment: \"" + data + "\"");

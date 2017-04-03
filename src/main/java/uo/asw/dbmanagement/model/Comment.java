@@ -50,6 +50,11 @@ public class Comment {
 		this(code);
 		Association.CreateComment.link(c, this, s);
 	}
+	
+	public Comment(String code, Citizen c, Suggestion s, String description){
+		this(code, c, s);
+		this.description = description;
+	}
 
 	public Citizen getCitizen() {
 		return citizen;

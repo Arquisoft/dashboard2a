@@ -56,8 +56,7 @@ public class Citizen {
 	public Citizen(String dni) {
 		this.dni = dni;
 	}
-	
-	
+
 	public Citizen(String password, String userName, String dni, String name, String surname, Date bornDate,
 			String email, String postAddress, String nationality) {
 		this(dni);
@@ -82,7 +81,6 @@ public class Citizen {
 	/* package */ Set<Suggestion> _getSuggestions() {
 		return suggestions;
 	}
-
 
 	public String getPassword() {
 		return password;

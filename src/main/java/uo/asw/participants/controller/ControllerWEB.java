@@ -40,13 +40,12 @@ public class ControllerWEB {
 		return "log";
 	}
 
-	
 	@RequestMapping(value = { "/closeSession" }, method = RequestMethod.GET)
 	public String closeSession(HttpSession session, Model model) {
 		session.invalidate();
 		return "log";
 	}
-	
+
 	/**
 	 * Recibe los datos de login del usuario, busca si exite ese usuario y en
 	 * caso de exitir pasa a la siguiente página que muestra la informacion en

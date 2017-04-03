@@ -4,8 +4,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
+
 
 import javax.annotation.ManagedBean;
 
@@ -19,6 +21,11 @@ public class KafkaProducer {
 
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
+
+	@Scheduled(cron = "*/5 * * * * *")
+	public void sendNewComment() {
+
+	}
 
 	public void send(String topic, String data) {
 		ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, data);

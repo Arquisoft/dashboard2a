@@ -10,8 +10,8 @@ import uo.asw.kafkastream.Topics;
 @ManagedBean(value = "positiveSuggestion")
 public class PositiveVoteSuggestionListener {
 
-private static final Logger logger = Logger.getLogger(PositiveVoteSuggestionListener.class);
-	
+	private static final Logger logger = Logger.getLogger(PositiveVoteSuggestionListener.class);
+
 	@KafkaListener(topics = Topics.CREATE_COMMENT)
 	public void listen(String data) {
 		logger.info("New message received in PositiveVoteSuggestion: \"" + data + "\"");

@@ -11,11 +11,13 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import uo.asw.dbmanagement.model.Category;
 import uo.asw.dbmanagement.model.Citizen;
 import uo.asw.dbmanagement.model.Comment;
 import uo.asw.dbmanagement.model.Suggestion;
 import uo.asw.dbmanagement.model.VoteComment;
 import uo.asw.dbmanagement.model.VoteSuggestion;
+import uo.asw.dbmanagement.repository.CategoryRepository;
 import uo.asw.dbmanagement.repository.CitizenRepository;
 import uo.asw.dbmanagement.repository.CommentRepository;
 import uo.asw.dbmanagement.repository.SuggestionRepository;
@@ -52,13 +54,22 @@ public class KafkaProducer {
 	private VoteSuggestionRepository repVoteSuggestion;
 
 	@Autowired
+	private CategoryRepository repCategory;
+	
+	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
-	@Scheduled(cron = "*/5 * * * * *")
+	@Scheduled(cron = "*/10 * * * * *")
 	public void sendNewComment() {
 		send(Topics.CREATE_COMMENT, commentToJson(createComment()));
 	}
 
+	 @Scheduled(cron = "*/15 * * * * *")
+	 public void sendNewSuggestion() {
+	 send(Topics.CREATE_SUGGESTION,
+	 suggestionToJson(createSuggestion()));
+	 }
+	
 	
 
 	public void send(String topic, String data) {
@@ -91,7 +102,7 @@ public class KafkaProducer {
 	}
 
 	public Suggestion createSuggestion() {
-		Suggestion s = new Suggestion(generateRandomCode(), "SUGGESTION", "Esto es una propuesta", 2);
+		Suggestion s = new Suggestion(getRamdomCitizen(),getRandomCategory(), generateRandomCode(), "SUGGESTION", "Esto es una propuesta", 2);
 		repSuggestion.save(s);
 		return s;
 	}
@@ -109,6 +120,11 @@ public class KafkaProducer {
 	private Suggestion getRandomSuggestion() {
 		List<Suggestion> s = repSuggestion.findAll();
 		return s.get(random(0, s.size() - 1));
+	}
+	
+	private Category getRandomCategory(){
+		List<Category> c = repCategory.findAll();
+		return c.get(random(0, c.size()- 1));
 	}
 
 	private Citizen getRamdomCitizen() {
@@ -139,9 +155,24 @@ public class KafkaProducer {
 		map.put("suggestion_id", c.getSuggestion().getId());
 		map.put("description", c.getDescription());
 		map.put("code", c.getCode());
+		return objectToJSON(map);
+	}
+	private String suggestionToJson(Suggestion s){
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", s.getId());
+		map.put("title", s.getTitle());
+		map.put("category_id", s.getCategory().getId());
+		map.put("code", s.getCode());
+		map.put("description", s.getDescription());
+		map.put("citizen_id", s.getCitizen().getId());
+		map.put("minVotes", s.getMinVotes());
+		return objectToJSON(map);
+	}
+	
+	private String objectToJSON(Object o){
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			return mapper.writeValueAsString(map);
+			return mapper.writeValueAsString(o);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			return "";

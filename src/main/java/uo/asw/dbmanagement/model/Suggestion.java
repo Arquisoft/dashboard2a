@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 public class Suggestion {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull
@@ -56,9 +56,10 @@ public class Suggestion {
 		this.minVotes = minVotes;
 	}
 	
-	public Suggestion(Citizen ci, String code, String title, String description, int minVotes) {
+	public Suggestion(Citizen ci, Category ca, String code, String title, String description, int minVotes) {
 		this(code, title, description, minVotes);
 		Association.CreateSuggestion.link(ci, this);
+		Association.CategorySuggestion.link(ca, this);
 	}
 
 

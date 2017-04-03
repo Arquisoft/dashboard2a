@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 public class Citizen {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull

@@ -3,8 +3,10 @@ package uo.asw.dbmanagement.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,13 +33,13 @@ public class Suggestion {
 	@ManyToOne
 	private Citizen citizen;
 
-	@OneToMany(mappedBy = "suggestion")
+	@OneToMany(mappedBy = "suggestion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Comment> comments = new HashSet<>();
 
 	@ManyToOne
 	private Category category;
 
-	@OneToMany(mappedBy = "suggestion")
+	@OneToMany(mappedBy = "suggestion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<VoteSuggestion> voteSuggestions = new HashSet<>();
 
 	Suggestion() {
@@ -53,6 +55,12 @@ public class Suggestion {
 		this.description = description;
 		this.minVotes = minVotes;
 	}
+	
+	public Suggestion(Citizen ci, String code, String title, String description, int minVotes) {
+		this(code, title, description, minVotes);
+		Association.CreateSuggestion.link(ci, this);
+	}
+
 
 	public Citizen getCitizen() {
 		return citizen;

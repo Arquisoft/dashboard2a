@@ -3,8 +3,10 @@ package uo.asw.dbmanagement.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +24,7 @@ public class Category {
 	@Column(unique = true)
 	private String name;
 
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Suggestion> suggestions = new HashSet<>();
 
 	Category() {

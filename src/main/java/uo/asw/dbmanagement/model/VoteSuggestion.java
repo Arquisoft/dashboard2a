@@ -28,6 +28,9 @@ public class VoteSuggestion {
 	@JoinColumn(name = "suggestion_id", referencedColumnName = "id")
 	private Suggestion suggestion;
 
+	VoteSuggestion() {
+	}
+	
 	public VoteSuggestion(Citizen c, Suggestion s) {
 		Association.VoteToSuggestion.link(c, this, s);
 	}
@@ -44,6 +47,10 @@ public class VoteSuggestion {
 		return vote;
 	}
 
+	public void setVote(VoteType type){
+		this.vote = type;
+	}
+	
 	public Citizen getCitizen() {
 		return citizen;
 	}

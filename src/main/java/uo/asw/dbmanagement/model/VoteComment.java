@@ -28,6 +28,10 @@ public class VoteComment {
 	@JoinColumn(name = "comment_id", referencedColumnName = "id")
 	private Comment comment;
 
+	VoteComment() {
+
+	}
+
 	public VoteComment(Citizen citizen, Comment comment) {
 		Association.VoteToComment.link(citizen, this, comment);
 	}
@@ -42,6 +46,10 @@ public class VoteComment {
 
 	public VoteType getVote() {
 		return vote;
+	}
+
+	public void setVote(VoteType type) {
+		this.vote = type;
 	}
 
 	public Citizen getCitizen() {

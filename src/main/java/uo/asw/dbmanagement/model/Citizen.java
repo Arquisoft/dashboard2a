@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,16 +40,16 @@ public class Citizen {
 	private String postAddress;
 	private String nationality;
 
-	@OneToMany(mappedBy = "citizen")
+	@OneToMany(mappedBy = "citizen", fetch = FetchType.EAGER)
 	private Set<Comment> comments = new HashSet<>();
 
-	@OneToMany(mappedBy = "citizen")
+	@OneToMany(mappedBy = "citizen", fetch = FetchType.EAGER)
 	private Set<Suggestion> suggestions = new HashSet<>();
 
-	@OneToMany(mappedBy = "citizen")
+	@OneToMany(mappedBy = "citizen", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<VoteSuggestion> voteSuggestions = new HashSet<>();
 
-	@OneToMany(mappedBy = "citizen")
+	@OneToMany(mappedBy = "citizen", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<VoteComment> voteComments = new HashSet<>();
 
 	Citizen() {

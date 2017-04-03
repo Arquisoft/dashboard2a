@@ -8,6 +8,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import uo.asw.dbmanagement.model.Citizen;
 import uo.asw.dbmanagement.model.Comment;
 import uo.asw.dbmanagement.model.Suggestion;
@@ -20,7 +23,9 @@ import uo.asw.dbmanagement.repository.VoteCommentRepository;
 import uo.asw.dbmanagement.repository.VoteSuggestionRepository;
 import uo.asw.kafkastream.Topics;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -49,48 +54,12 @@ public class KafkaProducer {
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
-	@Scheduled(cron = "*/15 * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void sendNewComment() {
-		send(Topics.CREATE_COMMENT, "{ \"comment\":\"" + createComment().getCode() + "\"}");
+		send(Topics.CREATE_COMMENT, commentToJson(createComment()));
 	}
 
-	// @Scheduled(cron = "*/20 * * * * *")
-	// public void sendNewSuggestion() {
-	// send(Topics.CREATE_SUGGESTION,
-	// "{ \"suggestion\":\"" + createSuggestion().getCode() + "\"}");
-	// }
-	//
-	// @Scheduled(cron = "*/7 * * * * *")
-	// public void sendNewNegativeVoteComment() {
-	// VoteComment vc = createVoteComment();
-	// vc.setVote(VoteType.NEGATIVE);
-	// send(Topics.NEGATIVE_VOTE_COMMENT, "{ \"comment\":\"" +
-	// vc.getComment().getCode() + "\"}");
-	// }
-	//
-	// @Scheduled(cron = "*/5 * * * * *")
-	// public void sendNewPositiveVoteComment() {
-	// VoteComment vc = createVoteComment();
-	// vc.setVote(VoteType.POSITIVE);
-	// send(Topics.POSITIVE_VOTE_COMMENT, "{ \"comment\":\"" +
-	// vc.getComment().getCode() + "\"}");
-	// }
-	//
-	// @Scheduled(cron = "*/5 * * * * *")
-	// public void sendNewNegativeVoteSuggestion() {
-	// VoteSuggestion vs = createVoteSuggestion();
-	// vs.setVote(VoteType.NEGATIVE);
-	// send(Topics.NEGATIVE_VOTE_SUGGESTION, "{ \"suggestion\":\"" +
-	// vs.getSuggestion().getId() + "\"}");
-	// }
-	//
-	// @Scheduled(cron = "*/7 * * * * *")
-	// public void sendNewPositiveVoteSuggestion() {
-	// VoteSuggestion vs = createVoteSuggestion();
-	// vs.setVote(VoteType.POSITIVE);
-	// send(Topics.POSITIVE_VOTE_SUGGESTION, "{ \"suggestion\":\"" +
-	// vs.getSuggestion().getId() + "\"}");
-	// }
+	
 
 	public void send(String topic, String data) {
 		ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, data);
@@ -156,4 +125,26 @@ public class KafkaProducer {
 		return new Random().nextInt(mayor - menor + 1) + menor;
 	}
 
+	
+	
+	/**
+	 * Convierte un comentario en JSON
+	 * @param c comentario
+	 * @return comentario en formato JSON
+	 */
+	private String commentToJson(Comment c){
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", c.getId());
+		map.put("citizen_id", c.getCitizen().getId());
+		map.put("suggestion_id", c.getSuggestion().getId());
+		map.put("description", c.getDescription());
+		map.put("code", c.getCode());
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			return mapper.writeValueAsString(map);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
 }

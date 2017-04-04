@@ -1,4 +1,4 @@
-package uo.asw.steps;
+package uo.asw;
 
 import org.junit.runner.RunWith;
 

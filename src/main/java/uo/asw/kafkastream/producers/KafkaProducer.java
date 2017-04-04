@@ -17,12 +17,11 @@ import uo.asw.dbmanagement.model.Comment;
 import uo.asw.dbmanagement.model.Suggestion;
 import uo.asw.dbmanagement.model.VoteComment;
 import uo.asw.dbmanagement.model.VoteSuggestion;
+import uo.asw.dbmanagement.model.types.VoteType;
 import uo.asw.dbmanagement.repository.CategoryRepository;
 import uo.asw.dbmanagement.repository.CitizenRepository;
 import uo.asw.dbmanagement.repository.CommentRepository;
 import uo.asw.dbmanagement.repository.SuggestionRepository;
-import uo.asw.dbmanagement.repository.VoteCommentRepository;
-import uo.asw.dbmanagement.repository.VoteSuggestionRepository;
 import uo.asw.kafkastream.Topics;
 
 import java.util.HashMap;
@@ -48,29 +47,48 @@ public class KafkaProducer {
 	private SuggestionRepository repSuggestion;
 
 	@Autowired
-	private VoteCommentRepository repVoteComment;
-
-	@Autowired
-	private VoteSuggestionRepository repVoteSuggestion;
-
-	@Autowired
 	private CategoryRepository repCategory;
-	
+
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
-	@Scheduled(cron = "*/10 * * * * *")
+	@Scheduled(cron = "*/20 * * * * *")
 	public void sendNewComment() {
 		send(Topics.CREATE_COMMENT, commentToJson(createComment()));
 	}
 
-	 @Scheduled(cron = "*/15 * * * * *")
-	 public void sendNewSuggestion() {
-	 send(Topics.CREATE_SUGGESTION,
-	 suggestionToJson(createSuggestion()));
-	 }
-	
-	
+	@Scheduled(cron = "*/25 * * * * *")
+	public void sendNewSuggestion() {
+		send(Topics.CREATE_SUGGESTION, suggestionToJson(createSuggestion()));
+	}
+
+	@Scheduled(cron = "*/5 * * * * *")
+	public void sendNewPositiveVoteComment() {
+		VoteComment c = createVoteComment();
+		c.setVote(VoteType.POSITIVE);
+		send(Topics.POSITIVE_VOTE_COMMENT, voteCommentToJson(c));
+	}
+
+	@Scheduled(cron = "*/7 * * * * *")
+	public void sendNewNegativeVoteComment() {
+		VoteComment c = createVoteComment();
+		c.setVote(VoteType.NEGATIVE);
+		send(Topics.NEGATIVE_VOTE_COMMENT, voteCommentToJson(c));
+	}
+
+	@Scheduled(cron = "*/8 * * * * *")
+	public void sendNewPositiveVoteSuggestion() {
+		VoteSuggestion c = createVoteSuggestion();
+		c.setVote(VoteType.POSITIVE);
+		send(Topics.POSITIVE_VOTE_SUGGESTION, voteSuggestionToJson(c));
+	}
+
+	@Scheduled(cron = "*/12 * * * * *")
+	public void sendNewNegativeVoteSuggestion() {
+		VoteSuggestion c = createVoteSuggestion();
+		c.setVote(VoteType.NEGATIVE);
+		send(Topics.NEGATIVE_VOTE_SUGGESTION, voteSuggestionToJson(c));
+	}
 
 	public void send(String topic, String data) {
 		ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, data);
@@ -96,21 +114,18 @@ public class KafkaProducer {
 	}
 
 	public VoteComment createVoteComment() {
-		VoteComment vc = new VoteComment(getRamdomCitizen(), getRandomComment());
-		repVoteComment.save(vc);
-		return vc;
+		return new VoteComment(getRamdomCitizen(), getRandomComment());
 	}
 
 	public Suggestion createSuggestion() {
-		Suggestion s = new Suggestion(getRamdomCitizen(),getRandomCategory(), generateRandomCode(), "SUGGESTION", "Esto es una propuesta", 2);
+		Suggestion s = new Suggestion(getRamdomCitizen(), getRandomCategory(), generateRandomCode(), "SUGGESTION",
+				"Esto es una propuesta", 2);
 		repSuggestion.save(s);
 		return s;
 	}
 
 	public VoteSuggestion createVoteSuggestion() {
-		VoteSuggestion vs = new VoteSuggestion(getRamdomCitizen(), getRandomSuggestion());
-		repVoteSuggestion.save(vs);
-		return vs;
+		return new VoteSuggestion(getRamdomCitizen(), getRandomSuggestion());
 	}
 
 	private String generateRandomCode() {
@@ -121,10 +136,10 @@ public class KafkaProducer {
 		List<Suggestion> s = repSuggestion.findAll();
 		return s.get(random(0, s.size() - 1));
 	}
-	
-	private Category getRandomCategory(){
+
+	private Category getRandomCategory() {
 		List<Category> c = repCategory.findAll();
-		return c.get(random(0, c.size()- 1));
+		return c.get(random(0, c.size() - 1));
 	}
 
 	private Citizen getRamdomCitizen() {
@@ -141,14 +156,30 @@ public class KafkaProducer {
 		return new Random().nextInt(mayor - menor + 1) + menor;
 	}
 
-	
-	
+	private String voteCommentToJson(VoteComment v) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("citizen_id", v.getCitizen().getId());
+		map.put("comment_id", v.getComment().getId());
+		map.put("vote", v.getVote());
+		return objectToJSON(map);
+	}
+
+	private String voteSuggestionToJson(VoteSuggestion v) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("citizen_id", v.getCitizen().getId());
+		map.put("comment_id", v.getCitizen().getId());
+		map.put("vote", v.getVote());
+		return objectToJSON(map);
+	}
+
 	/**
 	 * Convierte un comentario en JSON
-	 * @param c comentario
+	 * 
+	 * @param c
+	 *            comentario
 	 * @return comentario en formato JSON
 	 */
-	private String commentToJson(Comment c){
+	private String commentToJson(Comment c) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", c.getId());
 		map.put("citizen_id", c.getCitizen().getId());
@@ -157,7 +188,8 @@ public class KafkaProducer {
 		map.put("code", c.getCode());
 		return objectToJSON(map);
 	}
-	private String suggestionToJson(Suggestion s){
+
+	private String suggestionToJson(Suggestion s) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", s.getId());
 		map.put("title", s.getTitle());
@@ -168,8 +200,8 @@ public class KafkaProducer {
 		map.put("minVotes", s.getMinVotes());
 		return objectToJSON(map);
 	}
-	
-	private String objectToJSON(Object o){
+
+	private String objectToJSON(Object o) {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			return mapper.writeValueAsString(o);

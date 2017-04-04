@@ -12,7 +12,7 @@ public class NegativeVoteCommentListener {
 
 	private static final Logger logger = Logger.getLogger(NegativeVoteCommentListener.class);
 
-	@KafkaListener(topics = Topics.CREATE_COMMENT)
+	@KafkaListener(topics = Topics.NEGATIVE_VOTE_COMMENT)
 	public void listen(String data) {
 		logger.info("New message received in NegativeVoteComment: \"" + data + "\"");
 	}

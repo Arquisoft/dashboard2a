@@ -12,7 +12,7 @@ public class PositiveVoteCommentListener {
 
 	private static final Logger logger = Logger.getLogger(PositiveVoteCommentListener.class);
 
-	@KafkaListener(topics = Topics.CREATE_COMMENT)
+	@KafkaListener(topics = Topics.POSITIVE_VOTE_COMMENT)
 	public void listen(String data) {
 		logger.info("New message received in PositiveVoteComment: \"" + data + "\"");
 	}

@@ -13,5 +13,4 @@ import uo.asw.dbmanagement.model.VoteComment;
 
 @Repository
 public interface VoteCommentRepository extends JpaRepository<VoteComment, Long>{
-
 }

@@ -12,7 +12,7 @@ public class CreateSuggestionListener {
 
 	private static final Logger logger = Logger.getLogger(CreateSuggestionListener.class);
 
-	@KafkaListener(topics = Topics.CREATE_COMMENT)
+	@KafkaListener(topics = Topics.CREATE_SUGGESTION)
 	public void listen(String data) {
 		logger.info("New message received in CreateSuggestion: \"" + data + "\"");
 	}

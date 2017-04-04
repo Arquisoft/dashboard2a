@@ -1,6 +1,8 @@
 package uo.asw.dbmanagement.model;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -158,4 +160,16 @@ public class Suggestion {
 		this.category = c;
 	}
 
+	public Map<String, Object> toMap(){
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", this.getId());
+		map.put("title", this.getTitle());
+		map.put("category_id", this.getCategory().getId());
+		map.put("code", this.getCode());
+		map.put("description", this.getDescription());
+		map.put("citizen_id", this.getCitizen().getId());
+		map.put("minVotes", this.getMinVotes());
+		return map;
+	}
+	
 }

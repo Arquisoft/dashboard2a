@@ -12,7 +12,7 @@ public class PositiveVoteSuggestionListener {
 
 	private static final Logger logger = Logger.getLogger(PositiveVoteSuggestionListener.class);
 
-	@KafkaListener(topics = Topics.CREATE_COMMENT)
+	@KafkaListener(topics = Topics.POSITIVE_VOTE_SUGGESTION)
 	public void listen(String data) {
 		logger.info("New message received in PositiveVoteSuggestion: \"" + data + "\"");
 	}

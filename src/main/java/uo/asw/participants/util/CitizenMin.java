@@ -1,5 +1,7 @@
 package uo.asw.participants.util;
 
+import uo.asw.dbmanagement.model.Citizen;
+
 import java.util.Date;
 
 public class CitizenMin {
@@ -17,6 +19,14 @@ public class CitizenMin {
 		this.edad = DateUtil.getYears(fechaNacimiento);
 		this.id = id;
 		this.email = email;
+	}
+
+	public CitizenMin(Citizen c) {
+		this.firstName = c.getName();
+		this.lastName = c.getSurname();
+		this.edad = DateUtil.getYears(c.getBornDate());
+		this.id = c.getId();
+		this.email = c.getEmail();
 	}
 
 	public String getFirstName() {

@@ -109,6 +109,7 @@ public class KafkaProducer {
 
 	public Comment createComment() {
 		Comment c = new Comment(generateRandomCode(), getRamdomCitizen(), getRandomSuggestion(), "Comentario");
+		repComment.save(c);
 		return c;
 	}
 
@@ -119,6 +120,7 @@ public class KafkaProducer {
 	public Suggestion createSuggestion() {
 		Suggestion s = new Suggestion(getRamdomCitizen(), getRandomCategory(), generateRandomCode(), "SUGGESTION",
 				"Esto es una propuesta", 2);
+		repSuggestion.save(s);
 		return s;
 	}
 

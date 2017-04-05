@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import uo.asw.dbmanagement.model.Comment;
+import uo.asw.dbmanagement.repository.CommentRepository;
 import uo.asw.kafkastream.Topics;
 
 import java.io.IOException;
@@ -23,19 +24,23 @@ public class CreateCommentListener implements ApplicationEventPublisherAware {
     private ApplicationEventPublisher publisher;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @KafkaListener(topics = Topics.CREATE_COMMENT)
     public void listen(String data) {
         logger.info("New message received in CreateComment: \"" + data + "\"");
-//        Comment c = null;
-//        try {
-//            c = mapper.readValue(data, Comment.class);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        if (c != null) {
-//            publisher.publishEvent(c.getId());
-//        }
+        Comment c = null;
+        try {
+            c = mapper.readValue(data, Comment.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (c != null) {
+            c = commentRepository.findOne(c.getId());
+            publisher.publishEvent(c);
+        }
     }
 
     @Override

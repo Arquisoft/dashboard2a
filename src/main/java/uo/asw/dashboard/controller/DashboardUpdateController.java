@@ -2,6 +2,7 @@ package uo.asw.dashboard.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,9 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-public class DashboardCommentController {
+public class DashboardUpdateController {
     private List<SseEmitter> sseEmitters = Collections.synchronizedList(new ArrayList<SseEmitter>());
+    private static final Logger logger = Logger.getLogger(DashboardUpdateController.class);
 
     @Autowired
     private ObjectMapper mapper;
@@ -27,11 +29,10 @@ public class DashboardCommentController {
 
     @RequestMapping("/newComment")
     @EventListener
-    public void newComentary(Long data){
-        Comment c = getComments.getCommentById(data);
+    public void newComentary(Comment data){
         SseEmitter.SseEventBuilder newCommentEvent = SseEmitter
-                .event().name("evento")
-                .data("{ \"tipo\": \"newComnent\" ,  \"comment\":" + objectToJSON(c.toMap()) +" }");
+                .event().name("event")
+                .data("{ \"eventId\": \"newComnent\" ,  \"data\":" + objectToJSON(data.toMap()) +" }");
         sendEvent(newCommentEvent);
     }
 
@@ -54,7 +55,7 @@ public class DashboardCommentController {
         synchronized (sseEmitters) {
             for(SseEmitter emitter: sseEmitters){
                 try {
-                    System.out.println("Enviando el evento");
+                    logger.info("Sending event");
                     emitter.send(event);
                 } catch (IOException e) {
                     e.printStackTrace();

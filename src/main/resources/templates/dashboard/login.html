@@ -10,7 +10,9 @@
     <div class="columns">
         <div class="column col-12">
             <h1>Login en dashboard</h1>
-        </div>
+            </div>
+    </div>
+    <div class="columns">
         <div class="column col-6 centered">
             <div class="notification" th:if="${error}" th:text="${error}"></div>
             <form action="dashboard/login" class="login-form" method="post">
@@ -18,13 +20,13 @@
                     <div class="field">
                         <label class="label" for="user">Usuario</label>
                         <p class="control">
-                            <input class="input" type="text" id="user" placeholder="Contraseña">
+                            <input class="input" type="text" id="user" placeholder="Usuario"/>
                         </p>
                     </div>
                     <div class="field">
                         <label class="label" for="password">Contraseña</label>
                         <p class="control">
-                            <input class="input" type="password" id="password" placeholder="Contraseña">
+                            <input class="input" type="password" id="password" placeholder="Contraseña"/>
                         </p>
                     </div>
                 </div>

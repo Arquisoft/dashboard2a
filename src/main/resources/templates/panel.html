@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Dashboard Panel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css" integrity="sha256-8nf+BDtOgthqqdcfZXfDwth8LL6k314ILswPBDzXMp4=" crossorigin="anonymous" />
+</head>
+<body>
+<section class="section is">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Dashboard</h1>
+            <section class="hero">
+                <div class="hero-body">
+                    <div class="container">
+                        <h2 class="title">
+                            Comentarios
+                        </h2>
+                        <h3 class="subtitle">
+                            Los comentarios mas recientes
+                        </h3>
+
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-half">
+                        <table class="table is-striped" id="commentTable">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Codigo</th>
+                                <th>Contenido</th>
+                                <th>Ciudadano</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="column is-half"><img src="http://placehold.it/500" alt=""/></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!--SCIPTS-->
+
+<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" integrity="sha256-GcknncGKzlKm69d+sp+k3A2NyQE+jnu43aBl6rrDN2I=" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/loadUpdates.js}" />
+
+</body>
+</html>

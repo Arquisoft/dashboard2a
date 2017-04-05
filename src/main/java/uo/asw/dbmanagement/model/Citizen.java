@@ -2,6 +2,8 @@ package uo.asw.dbmanagement.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -208,4 +210,13 @@ public class Citizen {
 		return comments;
 	}
 
+    public Map<String, Object> toMap() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", this.getId());
+		map.put("dni", this.getDni());
+		map.put("name", this.getName());
+		map.put("surname", this.getSurname());
+		map.put("email", this.getEmail());
+		return map;
+    }
 }

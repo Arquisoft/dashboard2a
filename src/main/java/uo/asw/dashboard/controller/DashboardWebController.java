@@ -19,7 +19,7 @@ public class DashboardWebController {
     @RequestMapping(value = "/dashboard/login", method = RequestMethod.POST)
     public String doLogin(HttpSession session, @RequestParam String user, @RequestParam String password, Model model){
         model.addAttribute("error", "Usuario o contraseña incorrectos");
-        return "dashboard/login";
+        return "dashboard/dashboardPanel";
     }
 
 }

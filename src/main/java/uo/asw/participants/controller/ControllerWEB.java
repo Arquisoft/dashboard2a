@@ -79,7 +79,7 @@ public class ControllerWEB {
 				u = getUser.getUser(user, password);
 				if (u != null) {
 					session.setAttribute("user", u);
-					return "viewUser";
+					return "panel";
 				}
 			}
 		}

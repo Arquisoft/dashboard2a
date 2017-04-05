@@ -15,6 +15,13 @@ before_install:
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+
+addons:
+  sauce_connect:
+    username: "dashboard2a"
+    access_key: "23891e28-8674-4bba-ab7a-6ac197094a02"
+
+
 before_script:
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"

@@ -39,7 +39,8 @@ public class CreateCommentListener implements ApplicationEventPublisherAware {
 
         if (c != null) {
             c = commentRepository.findOne(c.getId());
-            publisher.publishEvent(c);
+            if(c != null)
+            	publisher.publishEvent(c);
         }
     }
 

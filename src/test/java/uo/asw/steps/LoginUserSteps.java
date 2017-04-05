@@ -1,12 +1,10 @@
 package uo.asw.steps;
 
 import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
+
 
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationContextLoader;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,7 +15,6 @@ import cucumber.api.java.es.Cuando;
 import cucumber.api.java.es.Dado;
 import cucumber.api.java.es.Entonces;
 import uo.asw.Application;
-import uo.asw.dashboard.MainController;
 import uo.asw.selenium.RellenarFormularioLogin;
 import uo.asw.utils.SauceUtils;
 import uo.asw.utils.SeleniumUtils;
@@ -35,7 +32,7 @@ public class LoginUserSteps {
 	@Before
 	public void run() {
 		driver = SauceUtils.getDriver();
-		driver.get("localhost:8090");
+		driver.navigate().to("http://localhost:8090/");
 	}
 
 	@Dado("^un formulario de login$")

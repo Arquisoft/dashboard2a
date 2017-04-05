@@ -4,7 +4,7 @@ import cucumber.api.java.Before;
 
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationContextLoader;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,7 +24,7 @@ import uo.asw.utils.SeleniumUtils;
 @ContextConfiguration(classes = Application.class, loader = SpringApplicationContextLoader.class)
 @IntegrationTest
 @WebAppConfiguration
-public class LoginUserSteps {
+public class LoginAlcaldeSteps {
 
 
 	private WebDriver driver;

@@ -35,13 +35,13 @@ public class Suggestion {
 	@ManyToOne
 	private Citizen citizen;
 
-	@OneToMany(mappedBy = "suggestion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "suggestion", fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
 	private Set<Comment> comments = new HashSet<>();
 
 	@ManyToOne
 	private Category category;
 
-	@OneToMany(mappedBy = "suggestion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "suggestion", fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
 	private Set<VoteSuggestion> voteSuggestions = new HashSet<>();
 
 	Suggestion() {

@@ -42,16 +42,16 @@ public class Citizen {
 	private String postAddress;
 	private String nationality;
 
-	@OneToMany(mappedBy = "citizen", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "citizen")
 	private Set<Comment> comments = new HashSet<>();
 
-	@OneToMany(mappedBy = "citizen", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "citizen")
 	private Set<Suggestion> suggestions = new HashSet<>();
 
-	@OneToMany(mappedBy = "citizen", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "citizen")
 	private Set<VoteSuggestion> voteSuggestions = new HashSet<>();
 
-	@OneToMany(mappedBy = "citizen", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "citizen")
 	private Set<VoteComment> voteComments = new HashSet<>();
 
 	Citizen() {

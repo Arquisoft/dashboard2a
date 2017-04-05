@@ -7,19 +7,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import cucumber.api.java.Before;
-import cucumber.api.java.es.Cuando;
 import cucumber.api.java.es.Dado;
 import cucumber.api.java.es.Entonces;
 import uo.asw.Application;
 import uo.asw.selenium.RellenarFormularioLogin;
 import uo.asw.utils.SauceUtils;
-import uo.asw.utils.SeleniumUtils;
 
 @ContextConfiguration(classes = Application.class, loader = SpringApplicationContextLoader.class)
 @IntegrationTest
 @WebAppConfiguration
-public class LoginParticipantSteps {
-	
+public class EditParticipantMailSteps {
+
 	private WebDriver driver;
 
 	@Before
@@ -28,18 +26,21 @@ public class LoginParticipantSteps {
 		driver.navigate().to("http://localhost:8090/");
 	}
 
-	@Dado("^un formulario de login de inicio$")
-	public void un_formulario_de_login_de_inicio() throws Throwable {
-		SeleniumUtils.textoPresentePagina(driver, "Inicio de sesion");
-	}
-
-	@Cuando("^me logueo como participante \"([^\"]*)\" con password \"([^\"]*)\"$")
-	public void me_logueo_como_participante_con_password(String user, String password) throws Throwable {
+	
+	@Dado("^que me logueo como participante \"([^\"]*)\" con password \"([^\"]*)\"$")
+	public void que_me_logueo_como_participante_con_password(String user, String password) throws Throwable {
 		new RellenarFormularioLogin().rellenaFormulario(driver, user, password);
 	}
 
-	@Entonces("^voy a la pagina del participante$")
-	public void voy_a_la_pagina_del_participante() throws Throwable {
-		SeleniumUtils.textoPresentePagina(driver, "Tu informacion");
+	@Dado("^modifico el email \"([^\"]*)\"$")
+	public void modifico_el_email(String email) throws Throwable {
+	   
 	}
+
+	@Entonces("^el email se actualiza$")
+	public void el_email_se_actualiza() throws Throwable {
+	    
+	}
+
+
 }

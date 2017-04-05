@@ -1,11 +1,9 @@
-Feature: Being able to login
-  Scenario: Login
-  Login with some username
+# language: es
+Característica: Login de usuario
 
-    Given a list of users:
-      | name    | password |
-      | pepe    | pepe12   |
-      | luis    | siul     |
-      | mari    | mmm      |
-    When I login with name "luis" and password "siul"
-    Then I receive a welcome message
+Escenario: Login como alcalde
+
+	Dado un formulario de login
+	Cuando me logueo como usuario "alcalde" con password "1234"
+	Entonces voy al dashboard del alcalde
+

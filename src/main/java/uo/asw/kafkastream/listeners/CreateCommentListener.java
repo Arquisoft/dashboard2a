@@ -27,15 +27,15 @@ public class CreateCommentListener implements ApplicationEventPublisherAware {
     @KafkaListener(topics = Topics.CREATE_COMMENT)
     public void listen(String data) {
         logger.info("New message received in CreateComment: \"" + data + "\"");
-        Comment c = null;
-        try {
-            c = mapper.readValue(data, Comment.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (c != null) {
-            publisher.publishEvent(c.getId());
-        }
+//        Comment c = null;
+//        try {
+//            c = mapper.readValue(data, Comment.class);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        if (c != null) {
+//            publisher.publishEvent(c.getId());
+//        }
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 
-public class UnioviTest {
+public class SeleniumTest {
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -26,18 +26,10 @@ public class UnioviTest {
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
 
-//    @Test
-//    public void testUnioviTest3() throws Exception {
-//        driver.get(baseUrl + "/");
-//        driver.findElement(By.id("cabecera_keywords")).clear();
-//        driver.findElement(By.id("cabecera_keywords")).sendKeys("rector");
-//        driver.findElement(By.id("cabecera_search")).click();
-//        try {
-//           // assertEquals("Rector", driver.findElement(By.cssSelector("li.alt > div.resultado_contenido > span.titulo > span.highlight")).getText());
-//        } catch (Error e) {
-//            verificationErrors.append(e.toString());
-//        }
-//    }
+    @Test
+    public void test1(){
+    	assertTrue(true);
+    }
 
     @After
     public void tearDown() throws Exception {

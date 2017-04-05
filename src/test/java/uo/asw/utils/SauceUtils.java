@@ -10,7 +10,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Value;
 
-import uo.asw.kafkastream.producers.KafkaProducer;
 
 public class SauceUtils {
 
@@ -36,6 +35,8 @@ public class SauceUtils {
 				saucelabs = new URL("http://" + user + ":" + password + "@ondemand.saucelabs.com/wd/hub");
 			} catch (MalformedURLException e) {
 				logger.error("La URL no es válida");
+				logger.info("Utilizando el firefox driver");
+				driver = new FirefoxDriver();
 			}
 			
 			capabilities = DesiredCapabilities.firefox();

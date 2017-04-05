@@ -32,6 +32,7 @@ public class LoginConcejalSteps {
 	
 	@Entonces("^voy al dashboard del concejal$")
 	public void voy_al_dashboard_del_concejal() throws Throwable {
-		SeleniumUtils.textoPresentePagina(driver, "Pagina del usuario");
+		SeleniumUtils.textoPresentePagina(driver, "Dashboard");
+		SeleniumUtils.textoPresentePagina(driver, "Comentarios");
 	}
 }

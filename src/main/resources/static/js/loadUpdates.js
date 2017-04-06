@@ -1,8 +1,22 @@
 $( window ).on("load", function() {
 
     let root = 'http://localhost:8090';
-    let commentTemplate = "<tr id=\"comment{data.id}\"><td>{data.id}</td><td>{data.code}</td><td>{data.description}</td><td>{data.citizen.name} {data.citizen.surname}</td><td>0</td><td>0</td></tr>"
-    let suggestionTemplate = "<tr id=\"suggestion{data.id}\"><td>{data.id}</td><td>{data.code}</td><td>{data.title}</td><td>{data.citizen.name} {data.citizen.surname}</td><td>0</td><td>0</td></tr>"
+    let commentTemplate = `<tr id=\"comment{data.id}\">
+  <td>{data.id}</td>
+  <td>{data.code}</td>
+  <td<a href="/dashboard/comment/{data.id}">{data.description}</a></td>
+  <td>{data.citizen.name} {data.citizen.surname}</td>
+  <td class="positive-vote">{data.votes_positive}</td>
+  <td class="negative-vote">{data.votes_negative}</td>
+  </tr>`;
+    let suggestionTemplate = `<tr id=\"suggestion{data.id}\">
+  <td>{data.id}</td>
+  <td>{data.code}</td>
+  <td><a href="/dashboard/suggestion/{data.id}">{data.title}</a></td>
+  <td>{data.citizen.name} {data.citizen.surname}</td>
+  <td class="positive-vote">{data.votes_positive}</td>
+  <td class="negative-vote">{data.votes_negative}</td>
+  </tr>`;
     var source = new EventSource(root+'/updates');
 
     source.onopen = function() {
@@ -26,21 +40,23 @@ $( window ).on("load", function() {
             $('#suggestionTable tbody').append(theRow);
         }
 
-        if(data.eventId == "newVoteComment"){
-            let commentID = data.data.comment.id;
-            let col = -1;
-            if(data.data.type=="POSITIVE"){
-                col = 4;
+        if(data.eventId == "newVoteSuggestion"){
+            let suggestionRow = '#suggestion' + data.data.suggestion.id;
+            if(data.data.type =="POSITIVE"){
+                $(suggestionRow+" .positive-vote").html(data.data.suggestion.votes_positive);
             }else{
-                col = 5;
-            }
-            let commentRow = $(`#comment${commentID}.td`);
-            if(commentRow[col]){
-                console.log("EXISTE EL OBJETO");
-                console.log(commentRow[col]);
+                $(suggestionRow+" .negative-vote").html(data.data.suggestion.votes_negative);
             }
         }
 
+        if(data.eventId == "newCommentSuggestion"){
+            let suggestionRow = '#comment' + data.data.comment.id;
+            if(data.data.type =="POSITIVE"){
+                $(suggestionRow+" .positive-vote").html(data.data.comment.votes_positive);
+            }else{
+                $(suggestionRow+" .negative-vote").html(data.data.comment.votes_negative);
+            }
+        }
 
     });
 });

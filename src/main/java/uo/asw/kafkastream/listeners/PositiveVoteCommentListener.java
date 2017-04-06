@@ -25,7 +25,8 @@ public class PositiveVoteCommentListener implements ApplicationEventPublisherAwa
     @Autowired
     private VoteCommentRepository voteCommentRepository;
 
-    @KafkaListener(topics = Topics.POSITIVE_VOTE_COMMENT)
+    @SuppressWarnings("unchecked")
+	@KafkaListener(topics = Topics.POSITIVE_VOTE_COMMENT)
     public void listen(String data) {
         logger.info("New message received in PositiveVoteComment: \"" + data + "\"");
         VoteComment vc = null;
@@ -40,7 +41,8 @@ public class PositiveVoteCommentListener implements ApplicationEventPublisherAwa
             Long citizenId =Long.parseLong(map.get("citizen_id").toString());
             Long commentId = Long.parseLong(map.get("comment_id").toString());
             VoteComment event = voteCommentRepository.findByCitizenIdAndCommentId(citizenId, commentId);
-            publisher.publishEvent(event);
+            if(event != null)
+            	publisher.publishEvent(event);
         }
     }
 

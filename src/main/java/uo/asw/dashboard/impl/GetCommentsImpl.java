@@ -2,7 +2,7 @@ package uo.asw.dashboard.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import uo.asw.dashboard.GetComments;
 import uo.asw.dashboard.GetSuggestions;
 import uo.asw.dbmanagement.model.Comment;

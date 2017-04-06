@@ -26,6 +26,7 @@ public class PositiveVoteSuggestionListener implements ApplicationEventPublisher
 	@Autowired
 	private VoteSuggestionRepository voteSuggestionRepository;
 
+	@SuppressWarnings("unchecked")
 	@KafkaListener(topics = Topics.POSITIVE_VOTE_SUGGESTION)
 	public void listen(String data) {
 		logger.info("New message received in PositiveVoteSuggestion: \"" + data + "\"");
@@ -41,7 +42,8 @@ public class PositiveVoteSuggestionListener implements ApplicationEventPublisher
 			Long citizenId =Long.parseLong(map.get("citizen_id").toString());
 			Long suggestionId = Long.parseLong(map.get("suggestion_id").toString());
 			vs = voteSuggestionRepository.findByCitizenIdAndSuggestionId(citizenId, suggestionId);
-			publisher.publishEvent(vs);
+			if(vs != null)
+				publisher.publishEvent(vs);
 		}
 	}
 

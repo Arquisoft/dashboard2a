@@ -75,7 +75,8 @@ public class KafkaProducer {
 	public void sendNewPositiveVoteComment() {
 		VoteComment c = createVoteComment();
 		c.setVote(VoteType.POSITIVE);
-		if (repVoteComment.findByCitizenIdAndCommentId(c.getCitizen().getId(), c.getComment().getId()) == null) {
+		if (repVoteComment.findByCitizenIdAndCommentId(c.getCitizen().getId(), c.getComment().getId()) == null
+				&& c != null && c.getCitizen() != null && c.getComment() != null) {
 			repVoteComment.save(c);
 			logger.info("TAMAÑO DE LOS VOTOS A COMMENT " + repVoteComment.findAll().size());
 			send(Topics.POSITIVE_VOTE_COMMENT, voteCommentToJson(c));
@@ -88,7 +89,8 @@ public class KafkaProducer {
 	public void sendNewNegativeVoteComment() {
 		VoteComment c = createVoteComment();
 		c.setVote(VoteType.NEGATIVE);
-		if (repVoteComment.findByCitizenIdAndCommentId(c.getCitizen().getId(), c.getComment().getId()) == null) {
+		if (repVoteComment.findByCitizenIdAndCommentId(c.getCitizen().getId(), c.getComment().getId()) == null
+				&& c != null && c.getCitizen() != null && c.getComment() != null) {
 			repVoteComment.save(c);
 			logger.info("TAMAÑO DE LOS VOTOS A COMMENT " + repVoteComment.findAll().size());
 			send(Topics.NEGATIVE_VOTE_COMMENT, voteCommentToJson(c));
@@ -103,7 +105,7 @@ public class KafkaProducer {
 		VoteSuggestion c = createVoteSuggestion();
 		c.setVote(VoteType.POSITIVE);
 		if (repVoteSuggestion.findByCitizenIdAndSuggestionId(c.getCitizen().getId(),
-				c.getSuggestion().getId()) == null) {
+				c.getSuggestion().getId()) == null && c != null && c.getCitizen() != null && c.getSuggestion() != null) {
 			// Comprobar que no existe para las claves
 			repVoteSuggestion.save(c);
 			logger.info("TAMAÑO DE LOS VOTOS A SUGESTION " + repVoteSuggestion.findAll().size());
@@ -122,7 +124,7 @@ public class KafkaProducer {
 		c.setVote(VoteType.NEGATIVE);
 
 		if (repVoteSuggestion.findByCitizenIdAndSuggestionId(c.getCitizen().getId(),
-				c.getSuggestion().getId()) == null) {
+				c.getSuggestion().getId()) == null && c != null && c.getCitizen() != null && c.getSuggestion() != null) {
 			// Comprobar que no existe para las claves
 			repVoteSuggestion.save(c);
 			logger.info("TAMAÑO DE LOS VOTOS A SUGESTION " + repVoteSuggestion.findAll().size());

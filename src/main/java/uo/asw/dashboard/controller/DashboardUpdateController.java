@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import uo.asw.dashboard.GetComments;
+
 import uo.asw.dbmanagement.model.Comment;
 import uo.asw.dbmanagement.model.Suggestion;
 import uo.asw.dbmanagement.model.VoteComment;
@@ -27,8 +27,7 @@ public class DashboardUpdateController {
 
     @Autowired
     private ObjectMapper mapper;
-    @Autowired
-    private GetComments getComments;
+   
 
     @RequestMapping("/newComment")
     @EventListener

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Sugerencia</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css" integrity="sha256-8nf+BDtOgthqqdcfZXfDwth8LL6k314ILswPBDzXMp4=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="section is">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Dashboard</h1>
+            <section id="suggestionsSection" class="hero">
+                <div class="hero-body">
+                    <div class="container">
+                        <h2 class="title">
+                            Sugerencia
+                        </h2>
+                        <h3 class="subtitle">
+                            Detalles de la sugerencia
+                        </h3>
+                        <div class="content">
+                            <h3 id="suggestionTitle">TITULO</h3>
+                            <h4>Votos</h4>
+                            <div class="countVotes">
+                                Positivos: <span id="positive-vote-count" class="positive-vote">2</span>
+                                Negativos: <span id="negative-vote-count" class="negative-vote">5</span>
+                            </div>
+                            <h4>Descripción</h4>
+                            <p id="suggestionText">Esta sugerencia es para sugerir algo</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-half content">
+                        <h3>Votos</h3>
+                        <table class="table is-striped" id="voteSuggestionTable">
+                            <thead>
+                            <tr>
+                                <th>Ciudadano</th>
+                                <th>Valor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="positive-vote">
+                                <td>Lorem.</td>
+                                <td>Laboriosam.</td>
+                            </tr>
+                            <tr class="negative-vote">
+                                <td>Lorem.</td>
+                                <td>Laboriosam.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="column is-half has-text-centered vote-chart"></div>
+                </div>
+
+            </section>
+
+
+        </div>
+    </div>
+
+</section>
+<!--SCRIPTS-->
+<script type="text/javascript">
+    var suggestionId = 2;
+    var votos = [2, 5];
+</script>
+<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" integrity="sha256-GcknncGKzlKm69d+sp+k3A2NyQE+jnu43aBl6rrDN2I=" crossorigin="anonymous"></script>
+<script src="http://aswfiles.hol.es/detailSuggestion.js"></script>
+</body>
+</html>

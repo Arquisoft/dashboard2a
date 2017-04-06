@@ -36,7 +36,6 @@ public class DashboardUpdateController {
         SseEmitter.SseEventBuilder newCommentEvent = SseEmitter
                 .event().name("event")
                 .data("{ \"eventId\": \"newComnent\" ,  \"data\":" + objectToJSON(data.toMap()) +" }");
-        logger.info("Enviando evento comentario" + data.getCode());
         sendEvent(newCommentEvent);
     }
 
@@ -70,7 +69,7 @@ public class DashboardUpdateController {
     @CrossOrigin(origins = "*")
     @RequestMapping("/updates")
     public SseEmitter getUpdates(){
-        SseEmitter sseEmitter = new SseEmitter();
+        SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
         synchronized (this.sseEmitters) {
             this.sseEmitters.add(sseEmitter);
             sseEmitter.onCompletion(() -> {

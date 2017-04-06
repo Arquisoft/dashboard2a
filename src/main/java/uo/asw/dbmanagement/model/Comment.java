@@ -162,9 +162,9 @@ public class Comment {
         map.put("suggestion_id", this.getSuggestion().getId());
         map.put("description", this.getDescription());
         map.put("code", this.getCode());
-        map.put("citizen", this.getCitizen().toMap());
         map.put("votes_positive", getPositiveVotes());
         map.put("votes_negative", getNegativeVotes());
+        map.put("citizen", this.getCitizen().toMap());
         return map;
     }
 

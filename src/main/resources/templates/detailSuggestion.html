@@ -47,7 +47,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="positive-vote" th:each="vote: ${suggestion.voteSuggestions}">
+                            <tr th:each="vote: ${suggestion.voteSuggestions}" th:class='${vote.vote.toString() == "POSITIVE"} ? positive-vote : negative-vote'>
                                 <td th:inline="text">[[${vote.citizen.name}]] [[${vote.citizen.surname}]]</td>
                                 <td th:inline="text">[[${vote.vote}]]</td>
                             </tr>

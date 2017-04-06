@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import uo.asw.dashboard.GetComments;
 import uo.asw.dashboard.GetSuggestions;
 import uo.asw.dbmanagement.GetParticipant;
 import uo.asw.dbmanagement.GetUser;
 import uo.asw.dbmanagement.UpdateInfo;
 import uo.asw.dbmanagement.model.Citizen;
+import uo.asw.dbmanagement.model.Comment;
 import uo.asw.dbmanagement.model.Suggestion;
 import uo.asw.dbmanagement.model.User;
 import uo.asw.participants.util.Check;
+
+import java.util.List;
 
 @Controller
 public class ControllerWEB {
@@ -28,6 +32,9 @@ public class ControllerWEB {
 
 	@Autowired
 	private GetSuggestions getSuggestions;
+
+	@Autowired
+	private GetComments getComments;
 
 	@Autowired
 	private UpdateInfo updateInfo;
@@ -85,6 +92,14 @@ public class ControllerWEB {
 				u = getUser.getUser(user, password);
 				if (u != null) {
 					session.setAttribute("user", u);
+					List<Suggestion> suggestions = getSuggestions.getSuggestions();
+					List<Comment> comments = getComments.getComments();
+					for (Suggestion s :
+							suggestions) {
+						System.out.println("s.getCitizen() = " + s.getCitizen());
+					}
+					model.addAttribute("suggestions", suggestions);
+					model.addAttribute("comments", comments);
 					return "panel";
 				}
 			}

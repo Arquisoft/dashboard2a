@@ -26,11 +26,12 @@ $( window ).on("load", function() {
     source.addEventListener('event', function(event){
         console.log("Recieved event");
         let data = JSON.parse(event.data);
-        console.log(event);
 
         if(data.eventId == "newComnent"){
             let row = nano(commentTemplate, data);
             let theRow = $(row);
+            console.log(row);
+            console.log(theRow);
             $('#commentTable tbody').append(theRow);
         }
         //
@@ -42,6 +43,7 @@ $( window ).on("load", function() {
 
         if(data.eventId == "newVoteSuggestion"){
             let suggestionRow = '#suggestion' + data.data.suggestion.id;
+
             if(data.data.type =="POSITIVE"){
                 $(suggestionRow+" .positive-vote").html(data.data.suggestion.votes_positive);
             }else{
@@ -49,7 +51,7 @@ $( window ).on("load", function() {
             }
         }
 
-        if(data.eventId == "newCommentSuggestion"){
+        if(data.eventId == "newVoteComment"){
             let suggestionRow = '#comment' + data.data.comment.id;
             if(data.data.type =="POSITIVE"){
                 $(suggestionRow+" .positive-vote").html(data.data.comment.votes_positive);

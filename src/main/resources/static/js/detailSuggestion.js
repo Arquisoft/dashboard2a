@@ -3,6 +3,14 @@ $( window ).on("load", function() {
     var root = 'http://localhost:8090';
 
     var voteSuggestionTemplate = "<tr><td>{data.citizen.name} {data.citizen.surname}</td><td>{data.type}</td></tr>";
+    let commentTemplate = `<tr id=\"comment{data.id}\">
+  <td>{data.id}</td>
+  <td>{data.code}</td>
+  <td<a href="/dashboard/comment/{data.id}">{data.description}</a></td>
+  <td>{data.citizen.name} {data.citizen.surname}</td>
+  <td class="positive-vote">{data.votes_positive}</td>
+  <td class="negative-vote">{data.votes_negative}</td>
+  </tr>`;
     var labelsVotes = ['Si', 'No'];
     var pieChart = null;
 
@@ -16,9 +24,7 @@ $( window ).on("load", function() {
 
     source.addEventListener('event', function(event){
         let data = JSON.parse(event.data);
-        if(data.eventId == "newVoteSuggestion"){
-            console.log(data.data.suggestion.id);
-        }
+
         if(data.eventId == "newVoteSuggestion" && data.data.suggestion.id == suggestionId){
             console.log("Recieved event");
             console.log(data.data.suggestion);
@@ -30,6 +36,26 @@ $( window ).on("load", function() {
             paintVote(data.data.type)
 
             updateSuggestion(data.data.suggestion);
+        }
+
+        if(data.eventId == "newComnent"){
+            console.log("Recieved event");
+            let row = nano(commentTemplate, data);
+            let theRow = $(row);
+            console.log(row);
+            console.log(theRow);
+            $('#commentTable tbody').append(theRow);
+            updateSuggestion(data.data.suggestion);
+        }
+
+        if(data.eventId == "newVoteComment"){
+            console.log("Recieved event");
+            let suggestionRow = '#comment' + data.data.comment.id;
+            if(data.data.type =="POSITIVE"){
+                $(suggestionRow+" .positive-vote").html(data.data.comment.votes_positive);
+            }else{
+                $(suggestionRow+" .negative-vote").html(data.data.comment.votes_negative);
+            }
         }
 
 
@@ -84,4 +110,3 @@ function nano(template, data) {
         return (typeof v !== "undefined" && v !== null) ? v : "";
     });
 }
-

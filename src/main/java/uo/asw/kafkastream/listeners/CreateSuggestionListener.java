@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import uo.asw.dbmanagement.model.Suggestion;
-import uo.asw.dbmanagement.repository.CommentRepository;
+
 import uo.asw.dbmanagement.repository.SuggestionRepository;
 import uo.asw.kafkastream.Topics;
 
@@ -37,7 +37,8 @@ public class CreateSuggestionListener  implements ApplicationEventPublisherAware
 		}
 		if(s!=null){
 			s = suggestionRepository.findOne(s.getId());
-			publisher.publishEvent(s);
+			if(s != null)
+				publisher.publishEvent(s);
 		}
 	}
 

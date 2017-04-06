@@ -9,15 +9,15 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.kafka.annotation.KafkaListener;
 
-import uo.asw.dbmanagement.model.Citizen;
+
 import uo.asw.dbmanagement.model.VoteComment;
-import uo.asw.dbmanagement.model.types.VoteCommentKey;
-import uo.asw.dbmanagement.repository.CitizenRepository;
+
+
 import uo.asw.dbmanagement.repository.VoteCommentRepository;
 import uo.asw.kafkastream.Topics;
 
 import java.io.IOException;
-import java.security.SecureRandom;
+
 import java.util.Map;
 
 @ManagedBean(value = "negtiveComment")
@@ -28,9 +28,9 @@ public class NegativeVoteCommentListener implements ApplicationEventPublisherAwa
 	private ObjectMapper mapper;
 	@Autowired
 	private VoteCommentRepository voteCommentRepository;
-	@Autowired
-	private CitizenRepository citizenRepository;
+	
 
+	@SuppressWarnings("unchecked")
 	@KafkaListener(topics = Topics.NEGATIVE_VOTE_COMMENT)
 	public void listen(String data) {
 		logger.info("New message received in NegativeVoteComment: \"" + data + "\"");
@@ -46,7 +46,8 @@ public class NegativeVoteCommentListener implements ApplicationEventPublisherAwa
 			Long citizenId =Long.parseLong(map.get("citizen_id").toString());
 			Long commentId = Long.parseLong(map.get("comment_id").toString());
 			vc = voteCommentRepository.findByCitizenIdAndCommentId(citizenId, commentId);
-			publisher.publishEvent(vc);
+			if(vc != null)
+				publisher.publishEvent(vc);
 		}
 	}
 

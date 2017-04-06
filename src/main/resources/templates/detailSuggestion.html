@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Sugerencia</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <title th:inline="text">Sugerencia - [[${suggestion.title}]]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css" integrity="sha256-8nf+BDtOgthqqdcfZXfDwth8LL6k314ILswPBDzXMp4=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="http://aswfiles.hol.es/style.css"/>
 </head>
 <body>
 <section class="section is">
@@ -24,14 +24,14 @@
                             Detalles de la sugerencia
                         </h3>
                         <div class="content">
-                            <h3 id="suggestionTitle">TITULO</h3>
+                            <h3 id="suggestionTitle" th:inline="text">[[${suggestion.title}]]</h3>
                             <h4>Votos</h4>
                             <div class="countVotes">
-                                Positivos: <span id="positive-vote-count" class="positive-vote">2</span>
-                                Negativos: <span id="negative-vote-count" class="negative-vote">5</span>
+                                Positivos: <span id="positive-vote-count" class="positive-vote" th:inline="text">[[${suggestion.positiveVotes}]]</span>
+                                Negativos: <span id="negative-vote-count" class="negative-vote" th:inline="text">[[${suggestion.negativeVotes}]]</span>
                             </div>
                             <h4>Descripción</h4>
-                            <p id="suggestionText">Esta sugerencia es para sugerir algo</p>
+                            <p id="suggestionText" th:inline="text">[[${suggestion.description}]]</p>
                         </div>
 
                     </div>
@@ -47,13 +47,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="positive-vote">
-                                <td>Lorem.</td>
-                                <td>Laboriosam.</td>
-                            </tr>
-                            <tr class="negative-vote">
-                                <td>Lorem.</td>
-                                <td>Laboriosam.</td>
+                            <tr class="positive-vote" th:each="vote: ${suggestion.voteSuggestions}">
+                                <td th:inline="text">[[${vote.citizen.name}]] [[${vote.citizen.surname}]]</td>
+                                <td th:inline="text">[[${vote.vote}]]</td>
                             </tr>
                             </tbody>
                         </table>
@@ -70,9 +66,11 @@
 
 </section>
 <!--SCRIPTS-->
-<script type="text/javascript">
-    var suggestionId = 2;
-    var votos = [2, 5];
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var suggestionId = [[${suggestion.id}]];
+    var votos = [ [[${suggestion.positiveVotes}]] , [[${suggestion.negativeVotes}]] ];
+    /*]]>*/
 </script>
 <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 <script

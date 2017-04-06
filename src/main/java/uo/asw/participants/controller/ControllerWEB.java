@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import uo.asw.dashboard.GetSuggestions;
 import uo.asw.dbmanagement.GetParticipant;
 import uo.asw.dbmanagement.GetUser;
 import uo.asw.dbmanagement.UpdateInfo;
 import uo.asw.dbmanagement.model.Citizen;
+import uo.asw.dbmanagement.model.Suggestion;
 import uo.asw.dbmanagement.model.User;
 import uo.asw.participants.util.Check;
 
@@ -22,6 +25,9 @@ public class ControllerWEB {
 
 	@Autowired
 	private GetParticipant getParticipant;
+
+	@Autowired
+	private GetSuggestions getSuggestions;
 
 	@Autowired
 	private UpdateInfo updateInfo;
@@ -156,5 +162,12 @@ public class ControllerWEB {
 			return "viewParticipant";
 		}
 		return "error";
+	}
+
+	@RequestMapping(value = "/dashboard/suggestion/{id}")
+	public String getDashboardSuggestion(@PathVariable(value = "id") Long id, Model model){
+		Suggestion s = getSuggestions.getSuggestionById(id);
+		model.addAttribute("suggestion", s);
+		return "/detailSuggestion";
 	}
 }

@@ -71,7 +71,7 @@ public class KafkaProducer {
 		send(Topics.CREATE_SUGGESTION, suggestionToJson(createSuggestion()));
 	}
 
-	@Scheduled(cron = "*/5 * * * * *")
+	@Scheduled(cron = "*/1 * * * * *")
 	public void sendNewPositiveVoteComment() {
 		VoteComment c = createVoteComment();
 		c.setVote(VoteType.POSITIVE);
@@ -85,7 +85,7 @@ public class KafkaProducer {
 		}
 	}
 
-	@Scheduled(cron = "*/7 * * * * *")
+	@Scheduled(cron = "*/2 * * * * *")
 	public void sendNewNegativeVoteComment() {
 		VoteComment c = createVoteComment();
 		c.setVote(VoteType.NEGATIVE);
@@ -100,7 +100,7 @@ public class KafkaProducer {
 
 	}
 
-	@Scheduled(cron = "*/5 * * * * *")
+	@Scheduled(cron = "*/1 * * * * *")
 	public void sendNewPositiveVoteSuggestion() {
 		VoteSuggestion c = createVoteSuggestion();
 		c.setVote(VoteType.POSITIVE);
@@ -118,7 +118,7 @@ public class KafkaProducer {
 	
 	
 	
-	@Scheduled(cron = "*/12 * * * * *")
+	@Scheduled(cron = "*/2 * * * * *")
 	public void sendNewNegativeVoteSuggestion() {
 		VoteSuggestion c = createVoteSuggestion();
 		c.setVote(VoteType.NEGATIVE);

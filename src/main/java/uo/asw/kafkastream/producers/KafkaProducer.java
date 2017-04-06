@@ -77,6 +77,7 @@ public class KafkaProducer {
 		c.setVote(VoteType.POSITIVE);
 		if (repVoteComment.findByCitizenIdAndCommentId(c.getCitizen().getId(), c.getComment().getId()) == null) {
 			repVoteComment.save(c);
+			logger.info("TAMAÑO DE LOS VOTOS A COMMENT " + repVoteComment.findAll().size());
 			send(Topics.POSITIVE_VOTE_COMMENT, voteCommentToJson(c));
 		} else {
 			logger.info("El ciudadano no puede volver a votar");
@@ -89,6 +90,7 @@ public class KafkaProducer {
 		c.setVote(VoteType.NEGATIVE);
 		if (repVoteComment.findByCitizenIdAndCommentId(c.getCitizen().getId(), c.getComment().getId()) == null) {
 			repVoteComment.save(c);
+			logger.info("TAMAÑO DE LOS VOTOS A COMMENT " + repVoteComment.findAll().size());
 			send(Topics.NEGATIVE_VOTE_COMMENT, voteCommentToJson(c));
 		} else {
 			logger.info("El ciudadano no puede volver a votar");
@@ -96,30 +98,34 @@ public class KafkaProducer {
 
 	}
 
-	@Scheduled(cron = "*/8 * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void sendNewPositiveVoteSuggestion() {
 		VoteSuggestion c = createVoteSuggestion();
 		c.setVote(VoteType.POSITIVE);
 		if (repVoteSuggestion.findByCitizenIdAndSuggestionId(c.getCitizen().getId(),
-				c.getSuggestion().getId()) != null) {
+				c.getSuggestion().getId()) == null) {
 			// Comprobar que no existe para las claves
 			repVoteSuggestion.save(c);
+			logger.info("TAMAÑO DE LOS VOTOS A SUGESTION " + repVoteSuggestion.findAll().size());
 			send(Topics.POSITIVE_VOTE_SUGGESTION, voteSuggestionToJson(c));
 		} else {
 			logger.info("El ciudadano no puede volver a votar");
 		}
 
 	}
-
+	
+	
+	
 	@Scheduled(cron = "*/12 * * * * *")
 	public void sendNewNegativeVoteSuggestion() {
 		VoteSuggestion c = createVoteSuggestion();
 		c.setVote(VoteType.NEGATIVE);
 
 		if (repVoteSuggestion.findByCitizenIdAndSuggestionId(c.getCitizen().getId(),
-				c.getSuggestion().getId()) != null) {
+				c.getSuggestion().getId()) == null) {
 			// Comprobar que no existe para las claves
 			repVoteSuggestion.save(c);
+			logger.info("TAMAÑO DE LOS VOTOS A SUGESTION " + repVoteSuggestion.findAll().size());
 			send(Topics.NEGATIVE_VOTE_SUGGESTION, voteSuggestionToJson(c));
 		} else {
 			logger.info("El ciudadano no puede volver a votar");

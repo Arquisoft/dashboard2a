@@ -31,5 +31,5 @@ public class CitizenRepository{
 		}
 		return ci;
 	}
-	
+
 }

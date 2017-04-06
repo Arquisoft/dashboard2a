@@ -3,9 +3,9 @@ package uo.asw.kafkastream.listeners;
 import javax.annotation.ManagedBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Level;
+
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;

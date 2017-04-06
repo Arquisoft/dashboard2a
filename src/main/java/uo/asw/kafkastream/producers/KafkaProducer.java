@@ -212,7 +212,7 @@ public class KafkaProducer {
 	private String voteSuggestionToJson(VoteSuggestion v) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("citizen_id", v.getCitizen().getId());
-		map.put("comment_id", v.getCitizen().getId());
+		map.put("suggestion_id", v.getCitizen().getId());
 		map.put("vote", v.getVote());
 		return objectToJSON(map);
 	}

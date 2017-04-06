@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import uo.asw.dashboard.GetComments;
 import uo.asw.dbmanagement.model.Comment;
+import uo.asw.dbmanagement.model.Suggestion;
+import uo.asw.dbmanagement.model.VoteComment;
+import uo.asw.dbmanagement.model.VoteSuggestion;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +36,35 @@ public class DashboardUpdateController {
         SseEmitter.SseEventBuilder newCommentEvent = SseEmitter
                 .event().name("event")
                 .data("{ \"eventId\": \"newComnent\" ,  \"data\":" + objectToJSON(data.toMap()) +" }");
+        logger.info("Enviando evento comentario" + data.getCode());
         sendEvent(newCommentEvent);
+    }
+
+    @RequestMapping("/newSuggestion")
+    @EventListener
+    public void newSuggestion(Suggestion data){
+        SseEmitter.SseEventBuilder newSuggestionEvent = SseEmitter
+                .event().name("event")
+                .data("{ \"eventId\": \"newSuggestion\" ,  \"data\":" + objectToJSON(data.toMap()) +" }");
+        sendEvent(newSuggestionEvent);
+    }
+
+    @RequestMapping("/newVoteComment")
+    @EventListener
+    public void newSuggestion(VoteComment data){
+        SseEmitter.SseEventBuilder newSuggestionEvent = SseEmitter
+                .event().name("event")
+                .data("{ \"eventId\": \"newVoteComment\" ,  \"data\":" + objectToJSON(data.toMap()) +" }");
+        sendEvent(newSuggestionEvent);
+    }
+
+    @RequestMapping("/newVoteSuggestion")
+    @EventListener
+    public void newSuggestion(VoteSuggestion data){
+        SseEmitter.SseEventBuilder newSuggestionEvent = SseEmitter
+                .event().name("event")
+                .data("{ \"eventId\": \"newVoteSuggestion\" ,  \"data\":" + objectToJSON(data.toMap()) +" }");
+        sendEvent(newSuggestionEvent);
     }
 
     @CrossOrigin(origins = "*")

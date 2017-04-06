@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import uo.asw.dbmanagement.model.types.VoteSuggestionKey;
 import uo.asw.dbmanagement.model.types.VoteType;
 
+import java.util.Map;
+import java.util.HashMap;
+
 @Entity
 @IdClass(VoteSuggestionKey.class)
 public class VoteSuggestion {
@@ -59,4 +62,11 @@ public class VoteSuggestion {
 		return suggestion;
 	}
 
+    public Map<String, Object> toMap() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("type", vote);
+		map.put("citizen", citizen.toMap());
+		map.put("suggestion", suggestion.toMap());
+		return map;
+    }
 }

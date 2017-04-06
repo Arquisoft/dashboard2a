@@ -1,5 +1,7 @@
 package uo.asw.dbmanagement.model;
 
+import uo.asw.dbmanagement.model.types.VoteType;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -93,6 +95,28 @@ public class Comment {
         return new HashSet<>(voteComments);
     }
 
+    public int getPositiveVotes(){
+        int count = 0;
+        for (VoteComment vc :
+                voteComments) {
+            if(vc.getVote().equals(VoteType.POSITIVE)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getNegativeVotes(){
+        int count = 0;
+        for (VoteComment vc :
+                voteComments) {
+            if(vc.getVote().equals(VoteType.NEGATIVE)){
+                count++;
+            }
+        }
+        return count;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -139,6 +163,8 @@ public class Comment {
         map.put("description", this.getDescription());
         map.put("code", this.getCode());
         map.put("citizen", this.getCitizen().toMap());
+        map.put("votes_positive", getPositiveVotes());
+        map.put("votes_negative", getNegativeVotes());
         return map;
     }
 

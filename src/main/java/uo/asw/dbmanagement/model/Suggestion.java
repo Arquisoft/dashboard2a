@@ -1,5 +1,7 @@
 package uo.asw.dbmanagement.model;
 
+import uo.asw.dbmanagement.model.types.VoteType;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -160,6 +162,29 @@ public class Suggestion {
 		this.category = c;
 	}
 
+
+	public int getPositiveVotes(){
+		int count = 0;
+		for (VoteSuggestion vs :
+				voteSuggestions) {
+			if(vs.getVote().equals(VoteType.POSITIVE)){
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public int getNegativeVotes(){
+		int count = 0;
+		for (VoteSuggestion vs :
+				voteSuggestions) {
+			if(vs.getVote().equals(VoteType.NEGATIVE)){
+				count++;
+			}
+		}
+		return count;
+	}
+
 	public Map<String, Object> toMap(){
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", this.getId());
@@ -167,8 +192,10 @@ public class Suggestion {
 		map.put("category_id", this.getCategory().getId());
 		map.put("code", this.getCode());
 		map.put("description", this.getDescription());
-		map.put("citizen_id", this.getCitizen().getId());
+		map.put("citizen", this.getCitizen().toMap());
 		map.put("minVotes", this.getMinVotes());
+		map.put("votes_positive", getPositiveVotes());
+		map.put("votes_negative", getNegativeVotes());
 		return map;
 	}
 	

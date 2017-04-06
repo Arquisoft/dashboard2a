@@ -94,10 +94,7 @@ public class ControllerWEB {
 					session.setAttribute("user", u);
 					List<Suggestion> suggestions = getSuggestions.getSuggestions();
 					List<Comment> comments = getComments.getComments();
-					for (Suggestion s :
-							suggestions) {
-						System.out.println("s.getCitizen() = " + s.getCitizen());
-					}
+
 					model.addAttribute("suggestions", suggestions);
 					model.addAttribute("comments", comments);
 					return "panel";
@@ -184,5 +181,12 @@ public class ControllerWEB {
 		Suggestion s = getSuggestions.getSuggestionById(id);
 		model.addAttribute("suggestion", s);
 		return "/detailSuggestion";
+	}
+
+	@RequestMapping(value = "/dashboard/comment/{id}")
+	public String getDashboardComment(@PathVariable(value = "id") Long id, Model model){
+		Comment c = getComments.getCommentById(id);
+		model.addAttribute("comment", c);
+		return "/detailComment";
 	}
 }

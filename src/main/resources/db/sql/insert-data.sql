@@ -10,11 +10,17 @@ INSERT INTO category values(3, 'categoria3');
 INSERT INTO category values(4, 'categoria4');
 INSERT INTO category values(5, 'categoria5');
 
-INSERT INTO citizen values(1, '1234', 'user1', '1234567890', 'user1', 'Surname1', '1994-05-01', 'user1@gmail.com', 'Oviedo', 'Español');
-INSERT INTO citizen values(2, '1234', 'user2', '1234567891', 'user2', 'Surname2', '1990-06-02', 'user2@gmail.com', 'Santander', 'Español');
-INSERT INTO citizen values(3, '1234', 'user3', '1234567892', 'user3', 'Surname3', '1984-07-03', 'user3@gmail.com', 'Bilbao', 'Español');
-INSERT INTO citizen values(4, '1234', 'user4', '1234567893', 'user4', 'Surname4', '1954-08-04', 'user4@gmail.com', 'Barakaldo', 'Español');
-INSERT INTO citizen values(5, '1234', 'user5', '1234567894', 'user5', 'Surname5', '1995-09-05', 'user5@gmail.com', 'Gijón', 'Español');
+INSERT INTO citizen values(1, '1234', 'user1', '1234567890', 'Martha', 'Jones', '1994-05-01', 'user1@gmail.com', 'Oviedo', 'Español');
+INSERT INTO citizen values(2, '1234', 'user2', '1234567891', 'Amy', 'Pond', '1990-06-02', 'user2@gmail.com', 'Santander', 'Español');
+INSERT INTO citizen values(3, '1234', 'user3', '1234567892', 'Rory', 'Williams', '1984-07-03', 'user3@gmail.com', 'Bilbao', 'Español');
+INSERT INTO citizen values(4, '1234', 'user4', '1234567893', 'Mickey', 'Smith', '1954-08-04', 'user4@gmail.com', 'Barakaldo', 'Español');
+INSERT INTO citizen values(5, '1234', 'user5', '1234567894', 'Wilfred', ' Mott', '1995-09-05', 'user5@gmail.com', 'Gijón', 'Español')
+INSERT INTO citizen values(6, '1234', 'user6', '1234567895', 'Clara', 'Oswald', '1994-05-01', 'clara@gmail.com', 'Londres', 'Inglés');
+INSERT INTO citizen values(7, '1234', 'user7', '1234567896', 'Rose', 'Tyler', '1990-06-02', 'rose@gmail.com', 'Londres', 'Inglés');
+INSERT INTO citizen values(8, '1234', 'user8', '1234567897', 'Jack', 'Harkness', '1984-07-03', 'jack@gmail.com', 'Cardiff', 'Inglés');
+INSERT INTO citizen values(9, '1234', 'user9', '1234567898', 'John', 'Smith', '1954-08-04', 'john@gmail.com', 'Capitor', 'Gallyfreyan');
+INSERT INTO citizen values(10, '1234', 'user10', '1234567810', 'Donna', 'Noble', '1995-09-05', 'donna@gmail.com', 'Londres', 'Inglés');
+
 
 INSERT INTO suggestion values(1, 'S001', 'Sugerencia 1', 'Esta es la sugerencia 1', 1, 1, 1);
 INSERT INTO suggestion values(2, 'S002', 'Sugerencia 2', 'Esta es la sugerencia 2', 10, 1, 2);

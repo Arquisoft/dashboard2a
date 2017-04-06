@@ -80,8 +80,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="comment
-                            : ${comments}" th:inline="text" th:id="|comment${comment.id}|">
+                            <tr th:each="comment: ${comments}" th:inline="text" th:id="|comment${comment.id}|">
                                 <td>[[${comment.id}]]</td>
                                 <td>[[${comment.code}]]</td>
                                 <td><a th:href="@{'/dashboard/comment/' + ${comment.id}}">[[${comment.description}]]</a></td>

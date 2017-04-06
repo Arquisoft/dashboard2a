@@ -22,6 +22,8 @@ import uo.asw.dbmanagement.repository.CategoryRepository;
 import uo.asw.dbmanagement.repository.CitizenRepository;
 import uo.asw.dbmanagement.repository.CommentRepository;
 import uo.asw.dbmanagement.repository.SuggestionRepository;
+import uo.asw.dbmanagement.repository.VoteCommentRepository;
+import uo.asw.dbmanagement.repository.VoteSuggestionRepository;
 import uo.asw.kafkastream.Topics;
 
 import java.util.HashMap;
@@ -48,7 +50,13 @@ public class KafkaProducer {
 
 	@Autowired
 	private CategoryRepository repCategory;
+	
+	@Autowired
+	private VoteCommentRepository repVoteComment;
 
+	@Autowired
+	private VoteSuggestionRepository repVoteSuggestion;
+	
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -114,7 +122,9 @@ public class KafkaProducer {
 	}
 
 	public VoteComment createVoteComment() {
-		return new VoteComment(getRamdomCitizen(), getRandomComment());
+		VoteComment c = new VoteComment(getRamdomCitizen(), getRandomComment());
+		repVoteComment.save(c);
+		return c;
 	}
 
 	public Suggestion createSuggestion() {
@@ -125,7 +135,9 @@ public class KafkaProducer {
 	}
 
 	public VoteSuggestion createVoteSuggestion() {
-		return new VoteSuggestion(getRamdomCitizen(), getRandomSuggestion());
+		VoteSuggestion s = new VoteSuggestion(getRamdomCitizen(), getRandomSuggestion());
+		repVoteSuggestion.save(s);
+		return s;
 	}
 
 	private String generateRandomCode() {

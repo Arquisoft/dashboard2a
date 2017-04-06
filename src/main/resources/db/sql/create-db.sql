@@ -48,13 +48,11 @@ suggestion_id BIGINT NOT NULL
 CREATE TABLE voteSuggestion(
 citizen_id BIGINT,
 suggestion_id BIGINT,
-vote VARCHAR(255) NOT NULL,
-CONSTRAINT pk_voteSuggestion PRIMARY KEY (citizen_id, suggestion_id)
+vote VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE voteComment(
 citizen_id BIGINT,
 comment_id BIGINT,
-vote VARCHAR(255) NOT NULL,
-CONSTRAINT pk_voteComment PRIMARY KEY (citizen_id, comment_id)
+vote VARCHAR(255) NOT NULL
 );

@@ -2,13 +2,14 @@ package uo.asw.dbmanagement.repository;
 
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 
@@ -29,7 +30,7 @@ public class VoteSuggestionRepository {
 	public void save(VoteSuggestion v) {
 		entityManager.createQuery("update VoteSuggestion set citizen_id = ?1, suggestion_id = ?2, vote = ?3")
 				.setParameter(1, v.getCitizen().getId()).setParameter(2, v.getSuggestion().getId())
-				.setParameter(3, v.getVote());
+				.setParameter(3, v.getVote()).executeUpdate();
 	}
 
 	public VoteSuggestion findByCitizenIdAndSuggestionId(Long citizen_id, Long suggestion_id) {

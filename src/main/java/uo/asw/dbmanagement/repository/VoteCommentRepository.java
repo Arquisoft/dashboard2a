@@ -1,11 +1,13 @@
 package uo.asw.dbmanagement.repository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import uo.asw.dbmanagement.model.VoteComment;
@@ -21,10 +23,10 @@ public class VoteCommentRepository {
 		return entityManager.createQuery("from VoteComment", VoteComment.class).getResultList();
 	}
 
-	public void save(VoteComment v) {
+	public void save(VoteComment v){
 		entityManager.createQuery("update VoteComment set citizen_id = ?1, comment_id = ?2, vote = ?3")
 				.setParameter(1, v.getCitizen().getId()).setParameter(2, v.getComment().getId())
-				.setParameter(3, v.getVote());
+				.setParameter(3, v.getVote()).executeUpdate();
 	}
 
 	public VoteComment findByCitizenIdAndCommentId(Long citizen_id, Long comment_id) {

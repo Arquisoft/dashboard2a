@@ -50,15 +50,16 @@ public class KafkaProducer {
 
 	@Autowired
 	private CategoryRepository repCategory;
-	
+
 	@Autowired
 	private VoteCommentRepository repVoteComment;
 
 	@Autowired
 	private VoteSuggestionRepository repVoteSuggestion;
-	
+
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
+
 
 	@Scheduled(cron = "*/20 * * * * *")
 	public void sendNewComment() {
@@ -74,28 +75,56 @@ public class KafkaProducer {
 	public void sendNewPositiveVoteComment() {
 		VoteComment c = createVoteComment();
 		c.setVote(VoteType.POSITIVE);
-		send(Topics.POSITIVE_VOTE_COMMENT, voteCommentToJson(c));
+		if (repVoteComment.findByCitizenIdAndCommentId(c.getCitizen().getId(), c.getComment().getId()) == null) {
+			repVoteComment.save(c);
+			send(Topics.POSITIVE_VOTE_COMMENT, voteCommentToJson(c));
+		} else {
+			logger.info("El ciudadano no puede volver a votar");
+		}
 	}
 
 	@Scheduled(cron = "*/7 * * * * *")
 	public void sendNewNegativeVoteComment() {
 		VoteComment c = createVoteComment();
 		c.setVote(VoteType.NEGATIVE);
-		send(Topics.NEGATIVE_VOTE_COMMENT, voteCommentToJson(c));
+		if (repVoteComment.findByCitizenIdAndCommentId(c.getCitizen().getId(), c.getComment().getId()) == null) {
+			repVoteComment.save(c);
+			send(Topics.NEGATIVE_VOTE_COMMENT, voteCommentToJson(c));
+		} else {
+			logger.info("El ciudadano no puede volver a votar");
+		}
+
 	}
 
 	@Scheduled(cron = "*/8 * * * * *")
 	public void sendNewPositiveVoteSuggestion() {
 		VoteSuggestion c = createVoteSuggestion();
 		c.setVote(VoteType.POSITIVE);
-		send(Topics.POSITIVE_VOTE_SUGGESTION, voteSuggestionToJson(c));
+		if (repVoteSuggestion.findByCitizenIdAndSuggestionId(c.getCitizen().getId(),
+				c.getSuggestion().getId()) != null) {
+			// Comprobar que no existe para las claves
+			repVoteSuggestion.save(c);
+			send(Topics.POSITIVE_VOTE_SUGGESTION, voteSuggestionToJson(c));
+		} else {
+			logger.info("El ciudadano no puede volver a votar");
+		}
+
 	}
 
 	@Scheduled(cron = "*/12 * * * * *")
 	public void sendNewNegativeVoteSuggestion() {
 		VoteSuggestion c = createVoteSuggestion();
 		c.setVote(VoteType.NEGATIVE);
-		send(Topics.NEGATIVE_VOTE_SUGGESTION, voteSuggestionToJson(c));
+
+		if (repVoteSuggestion.findByCitizenIdAndSuggestionId(c.getCitizen().getId(),
+				c.getSuggestion().getId()) != null) {
+			// Comprobar que no existe para las claves
+			repVoteSuggestion.save(c);
+			send(Topics.NEGATIVE_VOTE_SUGGESTION, voteSuggestionToJson(c));
+		} else {
+			logger.info("El ciudadano no puede volver a votar");
+		}
+
 	}
 
 	public void send(String topic, String data) {
@@ -123,7 +152,6 @@ public class KafkaProducer {
 
 	public VoteComment createVoteComment() {
 		VoteComment c = new VoteComment(getRamdomCitizen(), getRandomComment());
-		repVoteComment.save(c);
 		return c;
 	}
 
@@ -136,7 +164,6 @@ public class KafkaProducer {
 
 	public VoteSuggestion createVoteSuggestion() {
 		VoteSuggestion s = new VoteSuggestion(getRamdomCitizen(), getRandomSuggestion());
-		repVoteSuggestion.save(s);
 		return s;
 	}
 
